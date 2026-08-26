@@ -53,29 +53,28 @@ export function EthelPlayground() {
 
         {/* sandbox window */}
         <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-border bg-card/40 shadow-xl shadow-black/20 backdrop-blur">
-          {/* sandbox toolbar */}
-          <div className="flex flex-col gap-3 border-b border-border/70 bg-secondary/40 px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between">
-            {/* window dots + live status */}
-            <div className="flex items-center gap-3 pl-1">
-              <div className="flex items-center gap-1.5">
-                <span className="size-2.5 rounded-full bg-destructive/70" />
-                <span className="size-2.5 rounded-full bg-brand-pink/70" />
-                <span className="size-2.5 rounded-full bg-brand-teal/70" />
-              </div>
-              <span className="hidden items-center gap-1.5 font-mono text-[11px] text-muted-foreground sm:flex">
-                <span className="relative flex size-1.5">
-                  <span className="absolute inline-flex size-full rounded-full bg-brand-teal opacity-75 animate-pulse-ring" />
-                  <span className="relative inline-flex size-1.5 rounded-full bg-brand-teal" />
-                </span>
-                live · sample case CS-4471
-              </span>
+          {/* sandbox title bar */}
+          <div className="flex items-center gap-3 border-b border-border/70 bg-secondary/40 px-4 py-2.5">
+            <div className="flex items-center gap-1.5">
+              <span className="size-2.5 rounded-full bg-destructive/70" />
+              <span className="size-2.5 rounded-full bg-brand-pink/70" />
+              <span className="size-2.5 rounded-full bg-brand-teal/70" />
             </div>
+            <span className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full rounded-full bg-brand-teal opacity-75 animate-pulse-ring" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-brand-teal" />
+              </span>
+              <span className="truncate">live · sample case CS-4471</span>
+            </span>
+          </div>
 
-            {/* skinny tab switcher with sliding indicator */}
+          {/* tab switcher row */}
+          <div className="flex justify-center border-b border-border/70 bg-secondary/20 px-4 py-3">
             <div
               role="tablist"
               aria-label="Explore Ethel"
-              className="relative flex w-full rounded-full border border-border bg-background/60 p-1 sm:w-auto"
+              className="relative flex w-full max-w-md rounded-full border border-border bg-background/60 p-1"
             >
               {/* sliding pill */}
               <span
@@ -95,7 +94,7 @@ export function EthelPlayground() {
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setActive(tab.key)}
-                    className={`relative z-10 flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium transition-colors duration-200 sm:flex-none ${
+                    className={`relative z-10 flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium transition-colors duration-200 ${
                       isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
