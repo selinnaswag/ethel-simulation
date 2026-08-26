@@ -91,22 +91,20 @@ export function ThirtySecondDemo() {
 
         <div className="grid gap-px bg-border md:grid-cols-2">
           {/* Case record */}
-          <div className="bg-card p-6">
-            <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <div className="bg-card p-5">
+            <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               <FileText className="size-4" />
               Case record
             </div>
-            <h3 className="text-lg font-semibold text-foreground">{sampleCase.title}</h3>
+            <h3 className="text-base font-semibold text-foreground">{sampleCase.title}</h3>
             <p className="mt-1 font-mono text-xs text-muted-foreground">ID: {sampleCase.id}</p>
 
-            <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+            <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
               {[
                 ["Category", sampleCase.category],
                 ["Severity", sampleCase.severity],
                 ["Status", sampleCase.status],
                 ["Assigned to", sampleCase.assignedTo],
-                ["Reported via", sampleCase.reportedVia],
-                ["Reported on", sampleCase.reportedOn],
               ].map(([k, v]) => (
                 <div key={k}>
                   <dt className="text-xs text-muted-foreground">{k}</dt>
@@ -115,12 +113,12 @@ export function ThirtySecondDemo() {
               ))}
             </dl>
 
-            <div className="mt-6 border-t border-border pt-4">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <div className="mt-3 border-t border-border pt-3">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Intake responses
               </p>
-              <ul className="space-y-3">
-                {sampleCase.intake.map((item) => (
+              <ul className="space-y-2">
+                {sampleCase.intake.slice(0, 1).map((item) => (
                   <li key={item.q}>
                     <p className="text-sm font-medium text-foreground">{item.q}</p>
                     <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
@@ -131,7 +129,7 @@ export function ThirtySecondDemo() {
           </div>
 
           {/* Ethel panel */}
-          <div className="relative bg-gradient-to-b from-primary/[0.06] to-transparent p-6">
+          <div className="relative bg-gradient-to-b from-primary/[0.06] to-transparent p-5">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm font-semibold">
                 <span className="flex size-6 items-center justify-center rounded-md bg-primary/15">
@@ -154,7 +152,7 @@ export function ThirtySecondDemo() {
             </div>
 
             {phase === "idle" && (
-              <div className="flex min-h-[340px] flex-col items-center justify-center text-center">
+              <div className="flex min-h-[210px] flex-col items-center justify-center text-center">
                 <p className="mb-6 max-w-xs text-pretty text-sm leading-relaxed text-muted-foreground">
                   Ethel reads the full case record — intake, notes and status — and writes a
                   structured summary you can trust.
@@ -170,7 +168,7 @@ export function ThirtySecondDemo() {
             )}
 
             {phase === "reading" && (
-              <div className="min-h-[340px] space-y-3 pt-2">
+              <div className="min-h-[210px] space-y-3 pt-2">
                 <p className="text-sm text-muted-foreground">Ethel is reading the case…</p>
                 {[0, 1, 2, 3, 4].map((i) => (
                   <div
@@ -183,7 +181,7 @@ export function ThirtySecondDemo() {
             )}
 
             {(phase === "typing" || phase === "done") && (
-              <div className="min-h-[340px] space-y-5">
+              <div className="min-h-[210px] space-y-5">
                 {summaries.case.map((block, bi) => {
                   const started = stepIndex >= blockStartStep[bi] || phase === "done"
                   if (!started) return null

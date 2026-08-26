@@ -37,27 +37,23 @@ export function EthelPlayground() {
   const current = tabs.find((t) => t.key === active)!
 
   return (
-    <section id="playground" className="scroll-mt-20 border-y border-border/60 bg-secondary/20">
-      <div className="mx-auto max-w-7xl px-5 py-20">
+    <section id="playground" className="scroll-mt-16 border-y border-border/60 bg-secondary/20">
+      <div className="mx-auto max-w-7xl px-5 py-7">
         {/* overarching header */}
-        <div className="mx-auto mb-10 max-w-2xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-brand-pink">
+        <div className="mx-auto mb-4 max-w-2xl text-center">
+          <p className="mb-1.5 text-xs font-semibold uppercase tracking-widest text-brand-pink">
             Interactive simulations
           </p>
-          <h2 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+          <h2 className="text-balance text-2xl font-bold tracking-tight sm:text-3xl">
             Try Ethel yourself — <span className="text-gradient">three simulations</span>
           </h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-            Each tab is a live, hands-on simulation built on a sample myCM case. Switch between them
-            and put Ethel to work.
-          </p>
         </div>
 
         {/* tab switcher */}
         <div
           role="tablist"
           aria-label="Explore Ethel"
-          className="mx-auto mb-6 flex w-full max-w-xl flex-col gap-1.5 rounded-2xl border border-border bg-card/60 p-1.5 backdrop-blur sm:flex-row"
+          className="mx-auto mb-3 flex w-full max-w-xl flex-col gap-1.5 rounded-2xl border border-border bg-card/60 p-1.5 backdrop-blur sm:flex-row"
         >
           {tabs.map((tab) => {
             const isActive = tab.key === active
@@ -83,12 +79,9 @@ export function EthelPlayground() {
 
         {/* active panel */}
         <div role="tabpanel" className="animate-fade-up" key={active}>
-          <div className="mx-auto mb-8 max-w-2xl text-center">
-            <h3 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-              {current.title}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{current.blurb}</p>
-          </div>
+          <p className="mx-auto mb-3 max-w-2xl text-center text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">{current.title}.</span> {current.blurb}
+          </p>
           {active === "demo" && <ThirtySecondDemo />}
           {active === "summaries" && <SummaryTypes />}
           {active === "ask" && <AskEthel />}

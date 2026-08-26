@@ -4,27 +4,27 @@ import { MyCmGraphic } from "@/components/mycm-graphic"
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden bg-background">
-      {/* soft pink wash background */}
+      {/* subtle grid + tri-color top wash (no floating circles) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-[620px] w-[1000px] -translate-x-1/2 rounded-full bg-brand-pink/25 opacity-60 blur-[150px]"
+        className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(to_right,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_70%_55%_at_50%_0%,black,transparent)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-24 top-24 h-[420px] w-[420px] rounded-full bg-accent/20 opacity-50 blur-[130px]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[380px] bg-[linear-gradient(160deg,color-mix(in_oklch,var(--brand-pink)_12%,transparent),color-mix(in_oklch,var(--brand-blue)_10%,transparent)_45%,transparent_75%)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.3] [background-image:linear-gradient(to_right,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px)] [background-size:60px_60px] [mask-image:radial-gradient(ellipse_65%_55%_at_50%_0%,black,transparent)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-blue/50 to-transparent"
       />
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pt-16 pb-24 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-12 lg:pt-24">
         {/* Left: copy */}
         <div className="text-center lg:text-left">
-          <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-brand-pink/30 bg-brand-pink/10 px-4 py-1.5 text-sm text-foreground lg:mx-0">
+          <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-sm text-foreground backdrop-blur lg:mx-0">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full rounded-full bg-brand-pink opacity-75 animate-pulse-ring" />
-              <span className="relative inline-flex size-2 rounded-full bg-brand-pink" />
+              <span className="absolute inline-flex size-full rounded-full bg-brand-teal opacity-75 animate-pulse-ring" />
+              <span className="relative inline-flex size-2 rounded-full bg-brand-teal" />
             </span>
             Now live for every team in myCM
           </div>
@@ -53,41 +53,44 @@ export function HeroSection() {
               href="#roi"
               className="btn-anim inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-card/60 px-6 py-3.5 text-base font-semibold text-foreground hover:bg-card sm:w-auto"
             >
-              <Clock className="size-4 text-brand-pink" />
+              <Clock className="size-4 text-brand-teal" />
               Calculate your time saved
             </a>
           </div>
 
           <dl className="mx-auto mt-12 grid max-w-lg grid-cols-3 gap-4 border-t border-border/60 pt-8 lg:mx-0">
             {[
-              { v: "~30s", l: "to a full case summary" },
-              { v: "3", l: "summary types, one click" },
-              { v: "0", l: "case files to re-read" },
+              { v: "~30s", l: "to a full case summary", c: "text-brand-pink" },
+              { v: "3", l: "summary types, one click", c: "text-brand-blue" },
+              { v: "0", l: "case files to re-read", c: "text-brand-teal" },
             ].map((s) => (
               <div key={s.l} className="text-center lg:text-left">
-                <dt className="text-3xl font-bold tracking-tight text-gradient sm:text-4xl">
-                  {s.v}
-                </dt>
+                <dt className={`text-3xl font-bold tracking-tight sm:text-4xl ${s.c}`}>{s.v}</dt>
                 <dd className="mt-1 text-sm text-muted-foreground text-pretty">{s.l}</dd>
               </div>
             ))}
           </dl>
         </div>
 
-        {/* Right: code-built SVG of the myCM workspace */}
+        {/* Right: code-built SVG of the myCM workspace in a gradient frame */}
         <div className="relative">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 mx-auto my-auto h-3/4 w-3/4 rounded-full bg-brand-pink/25 opacity-60 blur-[90px]"
-          />
-          <div className="relative animate-float">
-            <MyCmGraphic className="h-auto w-full drop-shadow-2xl" />
+          <div className="animate-float rounded-[calc(var(--radius)+8px)] bg-gradient-to-br from-brand-pink/40 via-brand-blue/30 to-brand-teal/40 p-px shadow-2xl shadow-black/40">
+            <div className="relative overflow-hidden rounded-[calc(var(--radius)+7px)] bg-card p-3">
+              <MyCmGraphic className="h-auto w-full" />
+            </div>
             {/* floating "one click" chip */}
             <div className="absolute -left-3 top-6 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-left-6">
               <span className="flex size-6 items-center justify-center rounded-md bg-brand-pink/15">
                 <Sparkles className="size-3.5 text-brand-pink" />
               </span>
               One click, audit-aware
+            </div>
+            {/* floating time chip */}
+            <div className="absolute -right-3 bottom-8 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-right-6">
+              <span className="flex size-6 items-center justify-center rounded-md bg-brand-teal/15">
+                <Clock className="size-3.5 text-brand-teal" />
+              </span>
+              Done in ~30 seconds
             </div>
           </div>
         </div>
