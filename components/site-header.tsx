@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Sparkles, ArrowRight } from "lucide-react"
 
 export function SiteHeader() {
@@ -5,9 +6,14 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <a href="#top" className="flex items-center gap-2.5">
-          <span className="text-lg font-bold tracking-tight">
-            ETHIC<span className="text-primary">O</span>
-          </span>
+          <Image
+            src="/ethico-logo.png"
+            alt="Ethico"
+            width={110}
+            height={28}
+            priority
+            className="h-6 w-auto"
+          />
           <span className="hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
           <span className="hidden items-center gap-1.5 text-sm font-medium text-muted-foreground sm:flex">
             <Sparkles className="size-3.5 text-primary" />
@@ -32,7 +38,7 @@ export function SiteHeader() {
 
         <a
           href="#demo"
-          className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
+          className="btn-anim btn-anim-primary inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           Try Ethel in myCM
           <ArrowRight className="size-4" />

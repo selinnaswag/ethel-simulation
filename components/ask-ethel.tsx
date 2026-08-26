@@ -97,7 +97,7 @@ export function AskEthel() {
                 <button
                   key={i}
                   onClick={() => ask(i)}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm text-foreground transition-colors hover:border-primary/50 hover:bg-primary/10"
+                  className="btn-anim inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 px-3 py-1.5 text-sm text-foreground hover:border-primary/50 hover:bg-primary/10"
                 >
                   {suggestedPrompts[i].q}
                   <CornerDownLeft className="size-3.5 text-muted-foreground" />

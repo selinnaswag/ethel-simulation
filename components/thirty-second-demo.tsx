@@ -174,7 +174,7 @@ export function ThirtySecondDemo() {
                 </p>
                 <button
                   onClick={run}
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.04]"
+                  className="btn-anim btn-anim-primary inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
                 >
                   <Sparkles className="size-4" />
                   Summarize this case
@@ -238,7 +238,7 @@ export function ThirtySecondDemo() {
                     </span>
                     <button
                       onClick={reset}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                      className="btn-anim inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
                     >
                       <RotateCcw className="size-3.5" />
                       Run again

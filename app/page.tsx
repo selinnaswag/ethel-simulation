@@ -7,10 +7,12 @@ import { RoiCalculator } from "@/components/roi-calculator"
 import { HowItWorks } from "@/components/how-it-works"
 import { ModesSection } from "@/components/modes-section"
 import { AdoptionCta, SiteFooter } from "@/components/adoption-cta"
+import { ContactCta } from "@/components/contact-cta"
 
 export default function Page() {
   return (
     <main>
+      <ContactCta />
       <SiteHeader />
       <HeroSection />
       <ThirtySecondDemo />

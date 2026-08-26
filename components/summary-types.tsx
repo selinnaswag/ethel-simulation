@@ -33,7 +33,7 @@ export function SummaryTypes() {
                   key={tab.key}
                   onClick={() => setActive(tab.key)}
                   aria-pressed={isActive}
-                  className={`rounded-xl border p-4 text-left transition-colors ${
+                  className={`btn-anim rounded-xl border p-4 text-left ${
                     isActive
                       ? "border-primary/50 bg-primary/10"
                       : "border-border bg-card/40 hover:bg-card"

@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Sparkles, ArrowRight } from "lucide-react"
 
 export function AdoptionCta() {
@@ -20,19 +21,28 @@ export function AdoptionCta() {
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
-            href="#top"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.03] sm:w-auto"
+            href="mailto:clientsuccess@ethico.com?subject=Activating%20Ethel%20AI%20for%20our%20team%20in%20myCM"
+            className="btn-anim btn-anim-primary inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-7 py-3.5 text-base font-semibold text-primary-foreground sm:w-auto"
           >
-            Open Ethel in myCM
+            Activate Ethel for your team
             <ArrowRight className="size-4" />
           </a>
           <a
             href="#demo"
-            className="inline-flex w-full items-center justify-center rounded-full border border-border bg-card/50 px-7 py-3.5 text-base font-semibold text-foreground transition-colors hover:bg-card sm:w-auto"
+            className="btn-anim inline-flex w-full items-center justify-center rounded-full border border-border bg-card/50 px-7 py-3.5 text-base font-semibold text-foreground hover:bg-card sm:w-auto"
           >
             Replay the demo
           </a>
         </div>
+        <p className="mt-4 text-sm text-muted-foreground">
+          Questions? Email{" "}
+          <a
+            href="mailto:clientsuccess@ethico.com"
+            className="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            clientsuccess@ethico.com
+          </a>
+        </p>
       </div>
     </section>
   )
@@ -42,14 +52,15 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border/60">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-10 text-sm text-muted-foreground sm:flex-row">
-        <span className="text-base font-bold tracking-tight text-foreground">
-          ETHIC<span className="text-primary">O</span>
-        </span>
+        <Image src="/ethico-logo.png" alt="Ethico" width={100} height={26} className="h-5 w-auto" />
         <p className="text-pretty text-center">
           Ethel — AI Case Summary, built into myCM. Audit-aware by design.
         </p>
-        <a href="mailto:sales@ethico.com" className="transition-colors hover:text-foreground">
-          sales@ethico.com
+        <a
+          href="mailto:clientsuccess@ethico.com"
+          className="btn-anim transition-colors hover:text-foreground"
+        >
+          clientsuccess@ethico.com
         </a>
       </div>
     </footer>

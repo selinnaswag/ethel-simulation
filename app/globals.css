@@ -217,3 +217,71 @@
   background: var(--primary);
   animation: ethel-blink 1s step-end infinite;
 }
+
+/* Subtle, smooth animation shared by every button/CTA on the page */
+.btn-anim {
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+  will-change: transform;
+}
+.btn-anim:hover {
+  transform: translateY(-2px);
+}
+.btn-anim:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 0.08s;
+}
+.btn-anim:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Primary CTAs get an accompanying soft glow lift */
+.btn-anim-primary:hover {
+  box-shadow: 0 10px 30px -8px var(--primary);
+}
+
+@keyframes ethel-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.animate-float {
+  animation: ethel-float 6s ease-in-out infinite;
+}
+
+@keyframes ethel-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 55%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 12px color-mix(in oklch, var(--primary) 0%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 0%, transparent);
+  }
+}
+.animate-pulse-ring {
+  animation: ethel-pulse-ring 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-anim,
+  .animate-float,
+  .animate-pulse-ring,
+  .animate-fade-up {
+    animation: none !important;
+    transition: none !important;
+  }
+  .btn-anim:hover {
+    transform: none;
+  }
+}
