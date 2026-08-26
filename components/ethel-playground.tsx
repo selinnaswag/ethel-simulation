@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import { Play, Layers, MessageCircleQuestion, TerminalSquare } from "lucide-react"
 import { ThirtySecondDemo } from "@/components/thirty-second-demo"
 import { SummaryTypes } from "@/components/summary-types"
@@ -35,7 +35,20 @@ type TabKey = (typeof tabs)[number]["key"]
 export function EthelPlayground() {
   const [active, setActive] = useState<TabKey>("demo")
   const current = tabs.find((t) => t.key === active)!
-  const activeIndex = tabs.findIndex((t) => t.key === active)
+
+  const listRef = useRef<HTMLDivElement>(null)
+  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+  const [indicator, setIndicator] = useState({ left: 0, width: 0 })
+
+  useLayoutEffect(() => {
+    const update = () => {
+      const el = tabRefs.current[active]
+      if (el) setIndicator({ left: el.offsetLeft, width: el.offsetWidth })
+    }
+    update()
+    window.addEventListener("resize", update)
+    return () => window.removeEventListener("resize", update)
+  }, [active])
 
   return (
     <section id="playground" className="scroll-mt-16 border-y border-border/60 bg-secondary/20">
@@ -72,18 +85,16 @@ export function EthelPlayground() {
           {/* tab switcher row */}
           <div className="flex justify-center border-b border-border/70 bg-secondary/20 px-4 py-3">
             <div
+              ref={listRef}
               role="tablist"
               aria-label="Explore Ethel"
-              className="relative flex w-full max-w-md rounded-full border border-border bg-background/60 p-1"
+              className="relative flex w-full max-w-md rounded-full border border-border bg-background/60 p-1 sm:w-auto sm:max-w-none"
             >
               {/* sliding pill */}
               <span
                 aria-hidden="true"
-                className="absolute inset-y-1 rounded-full bg-primary shadow-sm transition-[left] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{
-                  width: `calc((100% - 0.5rem) / ${tabs.length})`,
-                  left: `calc(0.25rem + ${activeIndex} * (100% - 0.5rem) / ${tabs.length})`,
-                }}
+                className="absolute inset-y-1 rounded-full bg-primary shadow-sm transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                style={{ left: indicator.left, width: indicator.width }}
               />
               {tabs.map((tab) => {
                 const isActive = tab.key === active
@@ -91,10 +102,13 @@ export function EthelPlayground() {
                 return (
                   <button
                     key={tab.key}
+                    ref={(el) => {
+                      tabRefs.current[tab.key] = el
+                    }}
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setActive(tab.key)}
-                    className={`relative z-10 flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium transition-colors duration-200 ${
+                    className={`relative z-10 flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium transition-colors duration-200 sm:flex-none sm:px-4 ${
                       isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
