@@ -1,5 +1,6 @@
-import { Clock, Play, Sparkles, ArrowRight } from "lucide-react"
+import { Clock, Play, Sparkles } from "lucide-react"
 import { MyCmGraphic } from "@/components/mycm-graphic"
+import { OpenQuizButton } from "@/components/pain-point-quiz"
 
 export function HeroSection() {
   return (
@@ -30,10 +31,8 @@ export function HeroSection() {
             Now live for every team in myCM
           </div>
 
-          <h1 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+          <h1 className="text-balance text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
             Meet <span className="text-gradient">Ethel</span>.
-            <br />
-            Your case, summarized in <span className="text-gradient">30 seconds</span>.
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground md:mx-0 lg:text-lg">
@@ -42,21 +41,18 @@ export function HeroSection() {
             summary with a single click.
           </p>
 
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row md:justify-start">
+          <div className="mt-8 flex flex-row flex-nowrap items-center justify-center gap-2.5 md:justify-start">
             <a
               href="#playground"
-              className="btn-anim btn-anim-primary inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-6 py-3.5 text-base font-semibold text-primary-foreground sm:w-auto"
+              className="btn-anim btn-anim-primary inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-4 py-2.5 text-[13px] font-semibold text-primary-foreground"
             >
-              <Play className="size-4 fill-current" />
-              See what 30 seconds looks like
+              <Play className="size-3.5 shrink-0 fill-current" />
+              See the 30-second demo
             </a>
-            <a
-              href="#roi"
-              className="btn-anim inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-card/60 px-6 py-3.5 text-base font-semibold text-foreground hover:bg-card sm:w-auto"
-            >
-              <Clock className="size-4 text-brand-teal" />
-              Calculate your time saved
-            </a>
+            <OpenQuizButton className="btn-anim inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-border bg-card/60 px-4 py-2.5 text-[13px] font-semibold text-foreground hover:bg-card">
+              <Clock className="size-3.5 shrink-0 text-brand-teal" />
+              Take the pain-point quiz
+            </OpenQuizButton>
           </div>
 
           {/* inline stats */}
@@ -74,37 +70,29 @@ export function HeroSection() {
           </dl>
         </div>
 
-        {/* Right: SVG showcase */}
+        {/* Right: SVG showcase — no frame */}
         <div className="relative">
-          {/* teal→blue glow behind the frame */}
+          {/* teal→blue glow behind the graphic */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-6 rounded-[40px] bg-[radial-gradient(ellipse_at_center,color-mix(in_oklch,var(--brand-teal)_22%,transparent),transparent_70%)] blur-2xl"
+            className="pointer-events-none absolute -inset-6 rounded-[40px] bg-[radial-gradient(ellipse_at_center,color-mix(in_oklch,var(--brand-teal)_20%,transparent),transparent_70%)] blur-2xl"
           />
-          <div className="relative rounded-[calc(var(--radius)+8px)] bg-gradient-to-br from-brand-blue/50 via-brand-blue/20 to-brand-teal/50 p-px shadow-2xl shadow-black/50 lg:rotate-1 lg:transition-transform lg:duration-500 lg:hover:rotate-0">
-            <div className="relative overflow-hidden rounded-[calc(var(--radius)+7px)] bg-card p-3">
-              <MyCmGraphic className="h-auto w-full" />
-            </div>
+          <div className="relative lg:rotate-1 lg:transition-transform lg:duration-500 lg:hover:rotate-0">
+            <MyCmGraphic className="h-auto w-full drop-shadow-2xl" />
 
             {/* floating chips */}
-            <div className="absolute -left-3 top-8 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-left-6">
+            <div className="btn-anim absolute -left-3 top-8 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-left-6">
               <span className="flex size-6 items-center justify-center rounded-md bg-brand-blue/15">
                 <Sparkles className="size-3.5 text-brand-blue" />
               </span>
               One click, audit-aware
             </div>
-            <div className="absolute -right-3 bottom-10 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-right-6">
+            <div className="btn-anim absolute -right-3 bottom-6 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-right-6">
               <span className="flex size-6 items-center justify-center rounded-md bg-brand-teal/15">
                 <Clock className="size-3.5 text-brand-teal" />
               </span>
               Done in ~30 seconds
             </div>
-          </div>
-
-          {/* caption pill under the graphic */}
-          <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <ArrowRight className="size-4 text-brand-teal" />
-            A real myCM case, summarized live below
           </div>
         </div>
       </div>

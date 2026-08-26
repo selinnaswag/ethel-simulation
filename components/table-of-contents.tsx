@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 const items = [
   { id: "top", label: "Overview" },
   { id: "playground", label: "Simulations" },
-  { id: "roi", label: "Time saved" },
+  { id: "roi", label: "Pain points" },
   { id: "how", label: "How it works" },
   { id: "modes", label: "Standard & custom" },
   { id: "activate", label: "Activate Ethel" },

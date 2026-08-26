@@ -1,7 +1,7 @@
 import { SiteHeader } from "@/components/site-header"
 import { HeroSection } from "@/components/hero-section"
 import { EthelPlayground } from "@/components/ethel-playground"
-import { RoiCalculator } from "@/components/roi-calculator"
+import { PainPointQuiz } from "@/components/pain-point-quiz"
 import { HowItWorks } from "@/components/how-it-works"
 import { ModesSection } from "@/components/modes-section"
 import { AdoptionCta, SiteFooter } from "@/components/adoption-cta"
@@ -16,7 +16,7 @@ export default function Page() {
       <SiteHeader />
       <HeroSection />
       <EthelPlayground />
-      <RoiCalculator />
+      <PainPointQuiz />
       <HowItWorks />
       <ModesSection />
       <AdoptionCta />

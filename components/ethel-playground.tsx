@@ -12,21 +12,21 @@ const tabs = [
     label: "30-second demo",
     icon: Play,
     title: "One click, a full summary",
-    blurb: "Hit summarize and simulate a full 30-second case summary right here.",
+    blurb: "simulate it live below.",
   },
   {
     key: "summaries",
     label: "Three summary types",
     icon: Layers,
-    title: "The right summary for whoever's asking",
-    blurb: "Flip between the three summary types and simulate each audience view here.",
+    title: "The right summary for every audience",
+    blurb: "flip between them below.",
   },
   {
     key: "ask",
     label: "Ask Ethel anything",
     icon: MessageCircleQuestion,
     title: "Question the case directly",
-    blurb: "Ask a question about the sample case and simulate Ethel's grounded answer here.",
+    blurb: "try a grounded answer below.",
   },
 ] as const
 
@@ -87,8 +87,8 @@ export function EthelPlayground() {
 
         {/* active panel */}
         <div role="tabpanel" className="animate-fade-up" key={active}>
-          <p className="mx-auto mb-3 max-w-2xl text-center text-sm text-muted-foreground">
-            <span className="font-semibold text-foreground">{current.title}.</span> {current.blurb}
+          <p className="mx-auto mb-3 max-w-full truncate text-center text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">{current.title}</span> — {current.blurb}
           </p>
           {active === "demo" && <ThirtySecondDemo />}
           {active === "summaries" && <SummaryTypes />}

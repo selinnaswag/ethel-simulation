@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Sparkles, ArrowRight } from "lucide-react"
+import { Sparkles, ArrowDown } from "lucide-react"
 
 export function SiteHeader() {
   return (
@@ -26,7 +26,7 @@ export function SiteHeader() {
             Try it live
           </a>
           <a href="#roi" className="transition-colors hover:text-foreground">
-            Time saved
+            Pain points
           </a>
           <a href="#how" className="transition-colors hover:text-foreground">
             How it works
@@ -35,10 +35,10 @@ export function SiteHeader() {
 
         <a
           href="#playground"
-          className="btn-anim btn-anim-primary inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+          className="btn-anim btn-anim-primary group/cta inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           Test Ethel Now
-          <ArrowRight className="size-4" />
+          <ArrowDown className="size-4 transition-transform duration-300 group-hover/cta:translate-y-0.5" />
         </a>
       </div>
     </header>
