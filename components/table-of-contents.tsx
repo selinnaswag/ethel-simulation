@@ -8,7 +8,6 @@ const items = [
   { id: "roi", label: "Pain points" },
   { id: "how", label: "How it works" },
   { id: "modes", label: "Standard & custom" },
-  { id: "activate", label: "Activate Ethel" },
 ] as const
 
 export function TableOfContents() {
