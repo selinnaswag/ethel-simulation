@@ -11,28 +11,22 @@ const tabs = [
     key: "demo",
     label: "30-second demo",
     icon: Play,
-    eyebrow: "The 30-second demo",
-    title: "One click. A full summary. Your case still in view.",
-    blurb:
-      "This is a real myCM case view. Hit summarize and watch Ethel work — the case record stays right beside the summary the whole time.",
+    title: "One click, a full summary",
+    blurb: "Hit summarize and simulate a full 30-second case summary right here.",
   },
   {
     key: "summaries",
     label: "Three summary types",
     icon: Layers,
-    eyebrow: "Three summaries, one click",
-    title: "Same case. The right summary for whoever's asking.",
-    blurb:
-      "Briefing your team, updating an investigator, or reporting to leadership? Ethel reshapes the same case into the format each audience needs. Flip between them.",
+    title: "The right summary for whoever's asking",
+    blurb: "Flip between the three summary types and simulate each audience view here.",
   },
   {
     key: "ask",
     label: "Ask Ethel anything",
     icon: MessageCircleQuestion,
-    eyebrow: "Ask Ethel Anything",
-    title: "Beyond summaries — question the case directly.",
-    blurb:
-      "Ethel answers questions grounded in the case record, every answer audit-aware. Try one of the prompts below.",
+    title: "Question the case directly",
+    blurb: "Ask a question about the sample case and simulate Ethel's grounded answer here.",
   },
 ] as const
 
@@ -44,22 +38,26 @@ export function EthelPlayground() {
 
   return (
     <section id="playground" className="scroll-mt-20 border-y border-border/60 bg-secondary/20">
-      <div className="mx-auto max-w-6xl px-5 py-20">
-        <div className="mx-auto mb-8 max-w-2xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
-            {current.eyebrow}
+      <div className="mx-auto max-w-7xl px-5 py-20">
+        {/* overarching header */}
+        <div className="mx-auto mb-10 max-w-2xl text-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-brand-pink">
+            Interactive simulations
           </p>
-          <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-            {current.title}
+          <h2 className="text-balance text-4xl font-bold tracking-tight sm:text-5xl">
+            Try Ethel yourself — <span className="text-gradient">three simulations</span>
           </h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">{current.blurb}</p>
+          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
+            Each tab is a live, hands-on simulation built on a sample myCM case. Switch between them
+            and put Ethel to work.
+          </p>
         </div>
 
         {/* tab switcher */}
         <div
           role="tablist"
           aria-label="Explore Ethel"
-          className="mx-auto mb-10 flex w-full max-w-xl flex-col gap-1.5 rounded-2xl border border-border bg-card/60 p-1.5 backdrop-blur sm:flex-row"
+          className="mx-auto mb-6 flex w-full max-w-xl flex-col gap-1.5 rounded-2xl border border-border bg-card/60 p-1.5 backdrop-blur sm:flex-row"
         >
           {tabs.map((tab) => {
             const isActive = tab.key === active
@@ -85,6 +83,12 @@ export function EthelPlayground() {
 
         {/* active panel */}
         <div role="tabpanel" className="animate-fade-up" key={active}>
+          <div className="mx-auto mb-8 max-w-2xl text-center">
+            <h3 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+              {current.title}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{current.blurb}</p>
+          </div>
           {active === "demo" && <ThirtySecondDemo />}
           {active === "summaries" && <SummaryTypes />}
           {active === "ask" && <AskEthel />}

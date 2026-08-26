@@ -27,7 +27,7 @@ const modes = [
 
 export function ModesSection() {
   return (
-    <section className="border-t border-border/60 bg-secondary/20">
+    <section id="modes" className="scroll-mt-20 border-t border-border/60 bg-secondary/20">
       <div className="mx-auto max-w-6xl px-5 py-20">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">

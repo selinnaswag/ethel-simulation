@@ -3,7 +3,7 @@ import { Sparkles, ArrowRight } from "lucide-react"
 
 export function AdoptionCta() {
   return (
-    <section className="relative overflow-hidden px-5 py-24">
+    <section id="activate" className="relative scroll-mt-20 overflow-hidden px-5 py-24">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-1/2 mx-auto h-72 max-w-3xl -translate-y-1/2 rounded-full bg-primary/20 opacity-40 blur-[120px]"

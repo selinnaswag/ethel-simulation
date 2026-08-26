@@ -77,7 +77,7 @@ export function ThirtySecondDemo() {
   const started = phase !== "idle"
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-5xl">
       {/* browser chrome */}
       <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl shadow-black/40">
         <div className="flex items-center gap-2 border-b border-border bg-secondary/40 px-4 py-3">

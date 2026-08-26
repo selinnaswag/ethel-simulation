@@ -37,7 +37,7 @@ export function SiteHeader() {
           href="#playground"
           className="btn-anim btn-anim-primary inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
-          Try Ethel in myCM
+          Test Ethel Now
           <ArrowRight className="size-4" />
         </a>
       </div>

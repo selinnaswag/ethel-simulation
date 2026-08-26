@@ -3,30 +3,35 @@ import { MyCmGraphic } from "@/components/mycm-graphic"
 
 export function HeroSection() {
   return (
-    <section id="top" className="relative overflow-hidden">
-      {/* layered ambient background */}
+    <section id="top" className="relative overflow-hidden bg-background">
+      {/* soft pink wash background */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 left-1/2 h-[560px] w-[880px] -translate-x-1/2 rounded-full bg-primary/20 opacity-40 blur-[130px]"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[620px] w-[1000px] -translate-x-1/2 rounded-full bg-brand-pink/25 opacity-60 blur-[150px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(to_right,color-mix(in_oklch,var(--border)_60%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_60%,transparent)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]"
+        className="pointer-events-none absolute -right-24 top-24 h-[420px] w-[420px] rounded-full bg-accent/20 opacity-50 blur-[130px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.3] [background-image:linear-gradient(to_right,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_55%,transparent)_1px,transparent_1px)] [background-size:60px_60px] [mask-image:radial-gradient(ellipse_65%_55%_at_50%_0%,black,transparent)]"
       />
 
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pt-16 pb-20 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pt-24">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pt-16 pb-24 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-12 lg:pt-24">
         {/* Left: copy */}
         <div className="text-center lg:text-left">
-          <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-sm text-muted-foreground lg:mx-0">
+          <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-brand-pink/30 bg-brand-pink/10 px-4 py-1.5 text-sm text-foreground lg:mx-0">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full rounded-full bg-primary opacity-75 animate-pulse-ring" />
-              <span className="relative inline-flex size-2 rounded-full bg-primary" />
+              <span className="absolute inline-flex size-full rounded-full bg-brand-pink opacity-75 animate-pulse-ring" />
+              <span className="relative inline-flex size-2 rounded-full bg-brand-pink" />
             </span>
             Now live for every team in myCM
           </div>
 
-          <h1 className="text-balance text-5xl font-bold leading-[1.04] tracking-tight sm:text-6xl">
-            Meet <span className="text-gradient">Ethel</span>. Your case, summarized in{" "}
+          <h1 className="text-balance text-5xl font-bold leading-[1.03] tracking-tight sm:text-6xl">
+            Meet <span className="text-gradient">Ethel</span>.
+            <br className="hidden sm:block" /> Your case, summarized in{" "}
             <span className="text-gradient">30 seconds</span>.
           </h1>
 
@@ -39,16 +44,16 @@ export function HeroSection() {
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
             <a
               href="#playground"
-              className="btn-anim btn-anim-primary inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-primary-foreground sm:w-auto"
+              className="btn-anim btn-anim-primary inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-6 py-3.5 text-base font-semibold text-primary-foreground sm:w-auto"
             >
               <Play className="size-4 fill-current" />
               See what 30 seconds looks like
             </a>
             <a
               href="#roi"
-              className="btn-anim inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3.5 text-base font-semibold text-foreground hover:bg-card sm:w-auto"
+              className="btn-anim inline-flex w-full items-center justify-center gap-2 rounded-full border border-border bg-card/60 px-6 py-3.5 text-base font-semibold text-foreground hover:bg-card sm:w-auto"
             >
-              <Clock className="size-4 text-primary" />
+              <Clock className="size-4 text-brand-pink" />
               Calculate your time saved
             </a>
           </div>
@@ -60,7 +65,7 @@ export function HeroSection() {
               { v: "0", l: "case files to re-read" },
             ].map((s) => (
               <div key={s.l} className="text-center lg:text-left">
-                <dt className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                <dt className="text-3xl font-bold tracking-tight text-gradient sm:text-4xl">
                   {s.v}
                 </dt>
                 <dd className="mt-1 text-sm text-muted-foreground text-pretty">{s.l}</dd>
@@ -73,14 +78,14 @@ export function HeroSection() {
         <div className="relative">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 mx-auto my-auto h-3/4 w-3/4 rounded-full bg-accent/25 opacity-50 blur-[90px]"
+            className="pointer-events-none absolute inset-0 mx-auto my-auto h-3/4 w-3/4 rounded-full bg-brand-pink/25 opacity-60 blur-[90px]"
           />
           <div className="relative animate-float">
             <MyCmGraphic className="h-auto w-full drop-shadow-2xl" />
             {/* floating "one click" chip */}
             <div className="absolute -left-3 top-6 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-left-6">
-              <span className="flex size-6 items-center justify-center rounded-md bg-primary/15">
-                <Sparkles className="size-3.5 text-primary" />
+              <span className="flex size-6 items-center justify-center rounded-md bg-brand-pink/15">
+                <Sparkles className="size-3.5 text-brand-pink" />
               </span>
               One click, audit-aware
             </div>
