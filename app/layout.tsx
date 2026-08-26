@@ -12,21 +12,8 @@ export const metadata: Metadata = {
     'Ethel is your AI Case Summary assistant inside myCM. One click turns any case into a structured, audit-aware summary — see what 30 seconds with Ethel looks like.',
   generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/ethico-icon.png',
+    apple: '/ethico-icon.png',
   },
 }
 
