@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { List as ListIcon } from "lucide-react"
 
 const items = [
   { id: "top", label: "Overview" },
@@ -40,8 +39,7 @@ export function TableOfContents() {
       className="group fixed left-0 top-1/2 z-40 hidden -translate-y-1/2 lg:block"
     >
       {/* tiny edge tab */}
-      <div className="flex items-center gap-2 rounded-r-xl border border-l-0 border-border bg-card/80 py-3 pl-2 pr-2.5 shadow-lg backdrop-blur-xl transition-colors group-hover:border-brand-teal/40">
-        <ListIcon className="size-4 text-brand-teal" />
+      <div className="flex items-center rounded-r-xl border border-l-0 border-border bg-card/80 py-3 pl-2 pr-2.5 shadow-lg backdrop-blur-xl transition-colors group-hover:border-brand-teal/40">
         <span className="text-[11px] font-semibold uppercase tracking-widest text-brand-teal [writing-mode:vertical-rl] rotate-180">
           Table of Contents
         </span>
