@@ -77,20 +77,7 @@ export function ThirtySecondDemo() {
   const started = phase !== "idle"
 
   return (
-    <section id="demo" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-20">
-      <div className="mx-auto mb-12 max-w-2xl text-center">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
-          The 30-second demo
-        </p>
-        <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-          One click. A full summary. Your case still in view.
-        </h2>
-        <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          This is a real myCM case view. Hit summarize and watch Ethel work — the case record stays
-          right beside the summary the whole time.
-        </p>
-      </div>
-
+    <div className="mx-auto max-w-4xl">
       {/* browser chrome */}
       <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl shadow-black/40">
         <div className="flex items-center gap-2 border-b border-border bg-secondary/40 px-4 py-3">
@@ -250,6 +237,6 @@ export function ThirtySecondDemo() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

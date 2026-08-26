@@ -22,22 +22,19 @@ export function SiteHeader() {
         </a>
 
         <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
-          <a href="#demo" className="transition-colors hover:text-foreground">
-            30-second demo
-          </a>
-          <a href="#summaries" className="transition-colors hover:text-foreground">
-            Summary types
-          </a>
-          <a href="#ask" className="transition-colors hover:text-foreground">
-            Ask Ethel
+          <a href="#playground" className="transition-colors hover:text-foreground">
+            Try it live
           </a>
           <a href="#roi" className="transition-colors hover:text-foreground">
             Time saved
           </a>
+          <a href="#how" className="transition-colors hover:text-foreground">
+            How it works
+          </a>
         </nav>
 
         <a
-          href="#demo"
+          href="#playground"
           className="btn-anim btn-anim-primary inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
         >
           Try Ethel in myCM

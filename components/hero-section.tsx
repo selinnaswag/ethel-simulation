@@ -1,15 +1,20 @@
-import Image from "next/image"
-import { ArrowRight, Clock, Play } from "lucide-react"
+import { ArrowRight, Clock, Play, Sparkles } from "lucide-react"
+import { MyCmGraphic } from "@/components/mycm-graphic"
 
 export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden">
-      {/* ambient glow */}
+      {/* layered ambient background */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-primary/20 opacity-40 blur-[130px]"
+        className="pointer-events-none absolute -top-32 left-1/2 h-[560px] w-[880px] -translate-x-1/2 rounded-full bg-primary/20 opacity-40 blur-[130px]"
       />
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pt-16 pb-16 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:pt-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.35] [background-image:linear-gradient(to_right,color-mix(in_oklch,var(--border)_60%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--border)_60%,transparent)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]"
+      />
+
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 pt-16 pb-20 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:pt-24">
         {/* Left: copy */}
         <div className="text-center lg:text-left">
           <div className="mx-auto mb-7 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-1.5 text-sm text-muted-foreground lg:mx-0">
@@ -33,7 +38,7 @@ export function HeroSection() {
 
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
             <a
-              href="#demo"
+              href="#playground"
               className="btn-anim btn-anim-primary inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-base font-semibold text-primary-foreground sm:w-auto"
             >
               <Play className="size-4 fill-current" />
@@ -64,26 +69,21 @@ export function HeroSection() {
           </dl>
         </div>
 
-        {/* Right: isometric myCM visual */}
+        {/* Right: code-built SVG of the myCM workspace */}
         <div className="relative">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 mx-auto my-auto h-3/4 w-3/4 rounded-full bg-accent/25 opacity-50 blur-[90px]"
           />
-          <div className="relative overflow-hidden rounded-3xl border border-border/70 bg-card/30 shadow-2xl shadow-black/50">
-            <Image
-              src="/mycm-isometric.png"
-              alt="Isometric view of the myCM case management dashboard with Ethel AI generating a structured case summary alongside the case list"
-              width={1024}
-              height={1024}
-              priority
-              className="h-auto w-full"
-            />
-            {/* subtle top sheen */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
-            />
+          <div className="relative animate-float">
+            <MyCmGraphic className="h-auto w-full drop-shadow-2xl" />
+            {/* floating "one click" chip */}
+            <div className="absolute -left-3 top-6 hidden items-center gap-2 rounded-xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-lg backdrop-blur sm:flex lg:-left-6">
+              <span className="flex size-6 items-center justify-center rounded-md bg-primary/15">
+                <Sparkles className="size-3.5 text-primary" />
+              </span>
+              One click, audit-aware
+            </div>
           </div>
         </div>
       </div>

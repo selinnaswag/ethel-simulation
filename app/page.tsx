@@ -1,8 +1,6 @@
 import { SiteHeader } from "@/components/site-header"
 import { HeroSection } from "@/components/hero-section"
-import { ThirtySecondDemo } from "@/components/thirty-second-demo"
-import { SummaryTypes } from "@/components/summary-types"
-import { AskEthel } from "@/components/ask-ethel"
+import { EthelPlayground } from "@/components/ethel-playground"
 import { RoiCalculator } from "@/components/roi-calculator"
 import { HowItWorks } from "@/components/how-it-works"
 import { ModesSection } from "@/components/modes-section"
@@ -15,9 +13,7 @@ export default function Page() {
       <ContactCta />
       <SiteHeader />
       <HeroSection />
-      <ThirtySecondDemo />
-      <SummaryTypes />
-      <AskEthel />
+      <EthelPlayground />
       <RoiCalculator />
       <HowItWorks />
       <ModesSection />

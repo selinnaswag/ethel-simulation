@@ -36,21 +36,7 @@ export function AskEthel() {
     .filter((i) => !used.includes(i))
 
   return (
-    <section id="ask" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-20">
-      <div className="mx-auto mb-12 max-w-2xl text-center">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
-          Ask Ethel Anything
-        </p>
-        <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-          Beyond summaries — question the case directly.
-        </h2>
-        <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">
-          Ethel answers questions grounded in the case record, every answer audit-aware. Try one of
-          the prompts below.
-        </p>
-      </div>
-
-      <div className="mx-auto max-w-2xl overflow-hidden rounded-2xl border border-border bg-card">
+    <div className="mx-auto max-w-2xl overflow-hidden rounded-2xl border border-border bg-card">
         <div className="flex items-center gap-2 border-b border-border bg-secondary/40 px-4 py-3 text-sm font-medium">
           <Sparkles className="size-4 text-primary" />
           Ask Ethel — case {`{`}Expense reimbursement discrepancy{`}`}
@@ -109,8 +95,7 @@ export function AskEthel() {
               That&apos;s the demo set — in myCM you can ask anything about the case.
             </p>
           )}
-        </div>
       </div>
-    </section>
+    </div>
   )
 }
