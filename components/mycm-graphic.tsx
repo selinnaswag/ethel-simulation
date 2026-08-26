@@ -49,10 +49,6 @@ export function MyCmGraphic({ className }: { className?: string }) {
         </clipPath>
       </defs>
 
-      {/* ambient glow blobs behind the window */}
-      <circle cx="430" cy="70" r="90" fill="var(--gradient-to)" opacity="0.18" />
-      <circle cx="70" cy="390" r="80" fill="var(--gradient-from)" opacity="0.18" />
-
       <g clipPath="url(#ethel-window)" fontFamily="var(--font-sans, sans-serif)">
         <rect x="16" y="16" width="488" height="420" rx="18" fill="var(--card)" />
 

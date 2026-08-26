@@ -35,6 +35,7 @@ type TabKey = (typeof tabs)[number]["key"]
 export function EthelPlayground() {
   const [active, setActive] = useState<TabKey>("demo")
   const current = tabs.find((t) => t.key === active)!
+  const activeIndex = tabs.findIndex((t) => t.key === active)
 
   return (
     <section id="playground" className="scroll-mt-16 border-y border-border/60 bg-secondary/20">
@@ -49,12 +50,21 @@ export function EthelPlayground() {
           </h2>
         </div>
 
-        {/* tab switcher */}
+        {/* skinny tab switcher with sliding indicator */}
         <div
           role="tablist"
           aria-label="Explore Ethel"
-          className="mx-auto mb-3 flex w-full max-w-xl flex-col gap-1.5 rounded-2xl border border-border bg-card/60 p-1.5 backdrop-blur sm:flex-row"
+          className="relative mx-auto mb-3 flex w-full max-w-lg rounded-full border border-border bg-card/60 p-1 backdrop-blur"
         >
+          {/* sliding pill */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-1 rounded-full bg-primary shadow-sm transition-[left] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={{
+              width: `calc((100% - 0.5rem) / ${tabs.length})`,
+              left: `calc(0.25rem + ${activeIndex} * (100% - 0.5rem) / ${tabs.length})`,
+            }}
+          />
           {tabs.map((tab) => {
             const isActive = tab.key === active
             const Icon = tab.icon
@@ -64,14 +74,12 @@ export function EthelPlayground() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActive(tab.key)}
-                className={`btn-anim flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold ${
-                  isActive
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground"
+                className={`relative z-10 flex flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] font-medium transition-colors duration-200 ${
+                  isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <Icon className="size-4" />
-                {tab.label}
+                <Icon className="size-3.5 shrink-0" />
+                <span className="hidden sm:inline">{tab.label}</span>
               </button>
             )
           })}

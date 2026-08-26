@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { List as ListIcon } from "lucide-react"
 
 const items = [
   { id: "top", label: "Overview" },
@@ -13,7 +14,6 @@ const items = [
 
 export function TableOfContents() {
   const [active, setActive] = useState<string>("top")
-  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const sections = items
@@ -34,74 +34,52 @@ export function TableOfContents() {
     return () => observer.disconnect()
   }, [])
 
-  // Hand off from the hero panel to the sticky rail once the hero scrolls away.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 460)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
-
-  const List = ({ withDots }: { withDots: boolean }) => (
-    <ul className="space-y-1">
-      {items.map((item) => {
-        const isActive = active === item.id
-        return (
-          <li key={item.id}>
-            <a
-              href={`#${item.id}`}
-              className={`group flex items-center gap-3 rounded-r-lg border-l-2 py-1.5 pl-4 pr-3 text-sm transition-colors ${
-                isActive
-                  ? "border-brand-teal font-semibold text-foreground"
-                  : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-              }`}
-            >
-              {withDots && (
-                <span
-                  aria-hidden="true"
-                  className={`size-1.5 rounded-full transition-colors ${
-                    isActive ? "bg-brand-teal" : "bg-muted-foreground/40 group-hover:bg-foreground"
-                  }`}
-                />
-              )}
-              {item.label}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
-  )
-
   return (
-    <>
-      {/* Hero panel — visible over the hero, fades out as you scroll */}
-      <nav
-        aria-label="Table of contents"
-        aria-hidden={scrolled}
-        className={`fixed left-6 top-32 z-30 hidden w-44 rounded-2xl border border-border bg-card/70 p-4 backdrop-blur-xl transition-all duration-500 2xl:block ${
-          scrolled ? "pointer-events-none -translate-y-2 opacity-0" : "opacity-100"
-        }`}
-      >
-        <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-brand-teal">
-          <span className="h-px w-4 bg-brand-teal" />
+    <nav
+      aria-label="Table of contents"
+      className="group fixed left-0 top-1/2 z-40 hidden -translate-y-1/2 lg:block"
+    >
+      {/* tiny edge tab */}
+      <div className="flex items-center gap-2 rounded-r-xl border border-l-0 border-border bg-card/80 py-3 pl-2 pr-2.5 shadow-lg backdrop-blur-xl transition-colors group-hover:border-brand-teal/40">
+        <ListIcon className="size-4 text-brand-teal" />
+        <span className="text-[11px] font-semibold uppercase tracking-widest text-brand-teal [writing-mode:vertical-rl] rotate-180">
           Table of Contents
-        </p>
-        <List withDots={false} />
-      </nav>
+        </span>
+      </div>
 
-      {/* Sticky rail — fades in once past the hero */}
-      <nav
-        aria-label="On this page"
-        aria-hidden={!scrolled}
-        className={`fixed left-6 top-1/2 z-30 hidden w-44 -translate-y-1/2 transition-all duration-500 2xl:block ${
-          scrolled ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      >
-        <p className="mb-4 pl-4 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      {/* expandable panel on hover/focus */}
+      <div className="pointer-events-none absolute left-full top-1/2 ml-2 w-52 -translate-x-2 -translate-y-1/2 rounded-2xl border border-border bg-card/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-300 group-hover:pointer-events-auto group-hover:translate-x-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:translate-x-0 group-focus-within:opacity-100">
+        <p className="mb-2 pl-3 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
           On this page
         </p>
-        <List withDots />
-      </nav>
-    </>
+        <ul className="space-y-0.5">
+          {items.map((item) => {
+            const isActive = active === item.id
+            return (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  className={`group/link flex items-center gap-2.5 rounded-r-lg border-l-2 py-1.5 pl-3 pr-3 text-sm transition-colors ${
+                    isActive
+                      ? "border-brand-teal font-semibold text-foreground"
+                      : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                  }`}
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`size-1.5 rounded-full transition-colors ${
+                      isActive
+                        ? "bg-brand-teal"
+                        : "bg-muted-foreground/40 group-hover/link:bg-foreground"
+                    }`}
+                  />
+                  {item.label}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </nav>
   )
 }
