@@ -4,7 +4,7 @@ import { EthelPlayground } from "@/components/ethel-playground"
 import { PainPointQuiz } from "@/components/pain-point-quiz"
 import { HowItWorks } from "@/components/how-it-works"
 import { ModesSection } from "@/components/modes-section"
-import { AdoptionCta, SiteFooter } from "@/components/adoption-cta"
+import { SiteFooter } from "@/components/adoption-cta"
 import { ContactCta } from "@/components/contact-cta"
 import { TableOfContents } from "@/components/table-of-contents"
 
@@ -19,7 +19,6 @@ export default function Page() {
       <PainPointQuiz />
       <HowItWorks />
       <ModesSection />
-      <AdoptionCta />
       <SiteFooter />
     </main>
   )
