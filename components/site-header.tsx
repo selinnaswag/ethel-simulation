@@ -31,6 +31,9 @@ export function SiteHeader() {
           <a href="#how" className="transition-colors hover:text-foreground">
             How it works
           </a>
+          <a href="#beta" className="transition-colors hover:text-foreground">
+            Beta
+          </a>
         </nav>
 
         <a

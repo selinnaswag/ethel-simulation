@@ -308,13 +308,69 @@
   animation: ethel-pulse-ring 2.4s ease-out infinite;
 }
 
+/* Attention-drawing pop for the hero beta CTA */
+@keyframes ethel-beta-pop {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.05) translateY(-3px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+.animate-beta-pop {
+  animation: ethel-beta-pop 2.8s ease-in-out infinite;
+}
+
+/* Star-burst particles fired on beta sign-up click */
+@keyframes ethel-star-burst {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1)
+      rotate(var(--rot));
+    opacity: 0;
+  }
+}
+.ethel-star {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  animation: ethel-star-burst 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn-anim,
   .animate-float,
   .animate-pulse-ring,
-  .animate-fade-up {
+  .animate-fade-up,
+  .animate-beta-pop {
     animation: none !important;
     transition: none !important;
+  }
+  .ethel-star {
+    display: none !important;
   }
   .btn-anim:hover {
     transform: none;

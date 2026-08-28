@@ -1,6 +1,7 @@
 import { Clock, Play, Sparkles } from "lucide-react"
 import { MyCmGraphic } from "@/components/mycm-graphic"
 import { OpenQuizButton } from "@/components/pain-point-quiz"
+import { JoinBetaButton } from "@/components/beta-program"
 
 export function HeroSection() {
   return (
@@ -77,6 +78,21 @@ export function HeroSection() {
                 <Clock className="size-3.5 text-brand-teal" />
               </span>
               Done in ~30 seconds
+            </div>
+
+            {/* animated pop-out beta CTA */}
+            <div className="animate-beta-pop absolute -right-2 -top-4 z-10 lg:-right-8 lg:-top-6">
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full bg-brand-blue/40 blur-md"
+              />
+              <JoinBetaButton
+                count={18}
+                className="btn-anim btn-anim-primary inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-4 py-2 text-[13px] font-bold text-primary-foreground shadow-xl ring-2 ring-background"
+              >
+                <Sparkles className="size-3.5" />
+                Join the beta
+              </JoinBetaButton>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ const items = [
   { id: "playground", label: "Simulations" },
   { id: "roi", label: "Pain points" },
   { id: "how", label: "How it works" },
-  { id: "modes", label: "Standard & custom" },
+  { id: "beta", label: "Join the beta" },
 ] as const
 
 export function TableOfContents() {
