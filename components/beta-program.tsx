@@ -16,7 +16,9 @@ import {
   ArrowRight,
   X,
   Check,
+  PlayCircle,
 } from "lucide-react"
+import { BetaDemoModal, WatchDemoButton } from "@/components/beta-demo"
 
 const OPEN_EVENT = "ethel:open-beta"
 
@@ -207,7 +209,7 @@ export function BetaProgram() {
               Beta users get two new superpowers layered on top of case summaries — an AI analyst
               for your data, and reasoning that spans your entire organization.
             </p>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <JoinBetaButton
                 count={20}
                 className="btn-anim btn-anim-primary inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-7 py-3.5 text-base font-semibold text-primary-foreground"
@@ -215,11 +217,15 @@ export function BetaProgram() {
                 <Sparkles className="size-4" />
                 Join the beta
               </JoinBetaButton>
+              <WatchDemoButton className="btn-anim inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-7 py-3.5 text-base font-semibold text-foreground hover:bg-card">
+                <PlayCircle className="size-5 text-brand-teal" />
+                Watch the demo
+              </WatchDemoButton>
             </div>
           </div>
 
           {/* two products */}
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid items-start gap-6 md:grid-cols-2">
             {/* Ethel Insights */}
             <div className="rounded-2xl border border-border bg-card/60 p-7 backdrop-blur">
               <div className="mb-6 flex items-center gap-3">
@@ -256,6 +262,10 @@ export function BetaProgram() {
               <p className="mt-6 rounded-lg border border-border/60 bg-secondary/40 px-3 py-2 text-xs text-muted-foreground">
                 Scope — isolated to EcoReports and its datasets.
               </p>
+              <WatchDemoButton className="btn-anim mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-blue hover:gap-2.5">
+                <PlayCircle className="size-4" />
+                See it in action
+              </WatchDemoButton>
             </div>
 
             {/* Ethel Global */}
@@ -298,10 +308,17 @@ export function BetaProgram() {
                 Beta framing — generation focuses on getting the content right; apply your own
                 styling and branding on export.
               </p>
+              <WatchDemoButton className="btn-anim mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-teal hover:gap-2.5">
+                <PlayCircle className="size-4" />
+                See it in action
+              </WatchDemoButton>
             </div>
           </div>
         </div>
       </div>
+
+      {/* interactive product demo */}
+      <BetaDemoModal />
 
       {/* signup modal */}
       {open && (
