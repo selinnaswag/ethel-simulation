@@ -1,0 +1,120 @@
+<svg viewBox="0 0 520 452" width="520" height="452" role="img" aria-label="The myCM case workspace with Ethel generating a structured, audit-aware case summary beside the case list" xmlns="http://www.w3.org/2000/svg" font-family="Geist, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <linearGradient id="ethel-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#5392FC" />
+      <stop offset="50%" stop-color="#00C0E1" />
+      <stop offset="100%" stop-color="#5CE4D5" />
+    </linearGradient>
+    <linearGradient id="ethel-sheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#5392FC" stop-opacity="0" />
+      <stop offset="50%" stop-color="#00C0E1" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#5CE4D5" stop-opacity="0" />
+    </linearGradient>
+    <clipPath id="ethel-window">
+      <rect x="16" y="16" width="488" height="420" rx="18" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#ethel-window)">
+    <rect x="16" y="16" width="488" height="420" rx="18" fill="#121928" />
+
+    <!-- browser chrome -->
+    <rect x="16" y="16" width="488" height="40" fill="#192837" />
+    <circle cx="40" cy="36" r="5" fill="#E64343" opacity="0.7" />
+    <circle cx="58" cy="36" r="5" fill="#2AD5E5" opacity="0.8" />
+    <circle cx="76" cy="36" r="5" fill="#3ADFD7" opacity="0.7" />
+    <rect x="150" y="27" width="230" height="18" rx="9" fill="#090F1C" opacity="0.6" />
+    <text x="166" y="40" font-size="10" fill="#95A8B1">app.mycm.com / cases</text>
+
+    <!-- left: case list -->
+    <rect x="16" y="56" width="196" height="380" fill="#090F1C" opacity="0.35" />
+    <text x="34" y="84" font-size="11" font-weight="700" fill="#95A8B1" letter-spacing="1.5">CASES</text>
+
+    <!-- Case #4821 (active) y=98 -->
+    <g>
+      <rect x="28" y="98" width="170" height="50" rx="10" fill="#2AD5E5" opacity="0.14" stroke="url(#ethel-grad)" stroke-width="1.5" />
+      <circle cx="48" cy="118" r="9" fill="url(#ethel-grad)" opacity="1" />
+      <text x="66" y="117" font-size="10" font-weight="600" fill="#F1F6FA" opacity="1">Case #4821</text>
+      <text x="66" y="132" font-size="9" fill="#95A8B1">Harassment report</text>
+      <rect x="150" y="106" width="40" height="15" rx="7.5" fill="#2AD5E5" opacity="0.9" />
+      <text x="170" y="117" font-size="8" font-weight="600" text-anchor="middle" fill="#FBFDFE" opacity="1">Open</text>
+    </g>
+
+    <!-- Case #4820 y=160 -->
+    <g>
+      <rect x="28" y="160" width="170" height="50" rx="10" fill="#121928" opacity="0.9" stroke="#2E3644" stroke-width="1" />
+      <circle cx="48" cy="180" r="9" fill="url(#ethel-grad)" opacity="0.45" />
+      <text x="66" y="179" font-size="10" font-weight="600" fill="#F1F6FA" opacity="0.75">Case #4820</text>
+      <text x="66" y="194" font-size="9" fill="#95A8B1">Conflict of interest</text>
+      <rect x="154" y="168" width="36" height="15" rx="7.5" fill="#2AD5E5" opacity="0.25" />
+      <text x="172" y="179" font-size="8" font-weight="600" text-anchor="middle" fill="#F1F6FA" opacity="0.7">Review</text>
+    </g>
+
+    <!-- Case #4817 y=222 -->
+    <g>
+      <rect x="28" y="222" width="170" height="50" rx="10" fill="#121928" opacity="0.9" stroke="#2E3644" stroke-width="1" />
+      <circle cx="48" cy="242" r="9" fill="url(#ethel-grad)" opacity="0.45" />
+      <text x="66" y="241" font-size="10" font-weight="600" fill="#F1F6FA" opacity="0.75">Case #4817</text>
+      <text x="66" y="256" font-size="9" fill="#95A8B1">Expense policy breach</text>
+      <rect x="154" y="230" width="36" height="15" rx="7.5" fill="#2AD5E5" opacity="0.25" />
+      <text x="172" y="241" font-size="8" font-weight="600" text-anchor="middle" fill="#F1F6FA" opacity="0.7">Open</text>
+    </g>
+
+    <!-- Case #4814 y=284 -->
+    <g>
+      <rect x="28" y="284" width="170" height="50" rx="10" fill="#121928" opacity="0.9" stroke="#2E3644" stroke-width="1" />
+      <circle cx="48" cy="304" r="9" fill="url(#ethel-grad)" opacity="0.45" />
+      <text x="66" y="303" font-size="10" font-weight="600" fill="#F1F6FA" opacity="0.75">Case #4814</text>
+      <text x="66" y="318" font-size="9" fill="#95A8B1">Data handling concern</text>
+      <rect x="154" y="292" width="36" height="15" rx="7.5" fill="#2AD5E5" opacity="0.25" />
+      <text x="172" y="303" font-size="8" font-weight="600" text-anchor="middle" fill="#F1F6FA" opacity="0.7">Closed</text>
+    </g>
+
+    <!-- right: Ethel summary panel -->
+    <rect x="212" y="56" width="292" height="380" fill="#121928" />
+    <rect x="212" y="56" width="292" height="130" fill="url(#ethel-grad)" opacity="0.07" />
+
+    <!-- Ethel header -->
+    <rect x="236" y="78" width="28" height="28" rx="9" fill="url(#ethel-grad)" opacity="0.22" />
+    <path d="M250 86l1.7 3.6 3.9.4-2.9 2.7.9 3.8-3.5-2-3.5 2 .9-3.8-2.9-2.7 3.9-.4z" fill="url(#ethel-grad)" />
+    <text x="274" y="90" font-size="12" font-weight="700" fill="#F1F6FA">AI Case Summary</text>
+    <text x="274" y="103" font-size="9" fill="#95A8B1">Generated by Ethel · Case #4821</text>
+    <rect x="430" y="80" width="52" height="20" rx="10" fill="#2AD5E5" opacity="0.14" />
+    <text x="456" y="94" text-anchor="middle" font-family="'Geist Mono', ui-monospace, monospace" font-size="11" fill="#2AD5E5">28.4s</text>
+
+    <!-- summary section 1: What happened y=132 -->
+    <g>
+      <rect x="236" y="132" width="11" height="11" rx="3" fill="url(#ethel-grad)" />
+      <text x="254" y="142" font-size="11" font-weight="700" fill="#2AD5E5">What happened</text>
+      <text x="236" y="162" font-size="10.5" fill="#F1F6FA" opacity="0.72">Employee reported repeated</text>
+      <text x="236" y="178" font-size="10.5" fill="#F1F6FA" opacity="0.72">unwelcome comments from a</text>
+      <text x="236" y="194" font-size="10.5" fill="#F1F6FA" opacity="0.72">senior team member.</text>
+    </g>
+
+    <!-- summary section 2: Key facts y=224 -->
+    <g>
+      <rect x="236" y="224" width="11" height="11" rx="3" fill="url(#ethel-grad)" />
+      <text x="254" y="234" font-size="11" font-weight="700" fill="#2AD5E5">Key facts</text>
+      <text x="236" y="254" font-size="10.5" fill="#F1F6FA" opacity="0.72">3 witnesses named · 2 emails</text>
+      <text x="236" y="270" font-size="10.5" fill="#F1F6FA" opacity="0.72">attached · incident on Apr 3.</text>
+    </g>
+
+    <!-- summary section 3: Current status y=316 -->
+    <g>
+      <rect x="236" y="316" width="11" height="11" rx="3" fill="url(#ethel-grad)" />
+      <text x="254" y="326" font-size="11" font-weight="700" fill="#2AD5E5">Current status</text>
+      <text x="236" y="346" font-size="10.5" fill="#F1F6FA" opacity="0.72">Under investigation. HR</text>
+      <text x="236" y="362" font-size="10.5" fill="#F1F6FA" opacity="0.72">interview scheduled Apr 12.</text>
+    </g>
+
+    <!-- done footer -->
+    <line x1="236" y1="410" x2="482" y2="410" stroke="#2E3644" stroke-width="1" />
+    <circle cx="244" cy="426" r="8" fill="#2AD5E5" opacity="0.18" />
+    <path d="M241 426l2 2 4-4" stroke="#2AD5E5" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <text x="258" y="430" font-size="10" font-weight="500" fill="#F1F6FA" opacity="0.75">Audit-aware summary ready</text>
+  </g>
+
+  <!-- window border + top sheen -->
+  <rect x="16" y="16" width="488" height="420" rx="18" fill="none" stroke="#2E3644" stroke-width="1" />
+  <rect x="16" y="16" width="488" height="1.5" fill="url(#ethel-sheen)" />
+</svg>
