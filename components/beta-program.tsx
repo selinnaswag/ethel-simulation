@@ -14,6 +14,7 @@ import {
   PlayCircle,
 } from "lucide-react"
 import { BetaDemoModal, WatchDemoButton } from "@/components/beta-demo"
+import { UseCasesModal, ViewUseCasesButton } from "@/components/beta-use-cases"
 
 const OPEN_EVENT = "ethel:open-beta"
 
@@ -171,74 +172,155 @@ function ConsoleGraphic() {
   )
 }
 
-/** Ethel Global — an org-wide cross-case query console with a ranked match list. */
+/** Ethel Global — the myCM workspace with an Ethel pop-up running a cross-case query. */
 function NetworkGraphic() {
-  const rows = [
-    { id: "CS-4471", loc: "Dallas, US", pct: 96 },
-    { id: "CS-2210", loc: "London, UK", pct: 91 },
-    { id: "CS-8834", loc: "Toronto, CA", pct: 84 },
+  const cases = [
+    { id: "Case #4821", t: "Harassment", active: true },
+    { id: "Case #4779", t: "Vendor fraud", active: false },
+    { id: "Case #4712", t: "Conflict", active: false },
+    { id: "Case #4680", t: "Expense", active: false },
   ]
-  const barX = 176
-  const barW = 96
+  const matches = [
+    { id: "CS-2210", loc: "London, UK", pct: 94 },
+    { id: "CS-8834", loc: "Toronto, CA", pct: 88 },
+    { id: "CS-1097", loc: "Berlin, DE", pct: 81 },
+  ]
+  const barX = 286
+  const barW = 50
   return (
     <svg
-      viewBox="0 0 340 176"
+      viewBox="0 0 400 300"
       className="h-full w-full"
       role="img"
-      aria-label="Ethel Global querying every case across the organization and ranking matches by region"
+      aria-label="The myCM case workspace with an Ethel pop-up querying similar cases across every region"
     >
-      {/* window */}
-      <rect x="4" y="4" width="332" height="168" rx="12" fill="var(--card)" stroke="var(--border)" />
-      {/* title bar */}
-      <rect x="4" y="4" width="332" height="26" rx="12" fill="var(--secondary)" />
-      <rect x="4" y="18" width="332" height="12" fill="var(--secondary)" />
-      <circle cx="20" cy="17" r="3.5" fill="var(--destructive)" opacity="0.7" />
-      <circle cx="32" cy="17" r="3.5" fill="var(--brand-pink)" opacity="0.7" />
-      <circle cx="44" cy="17" r="3.5" fill="var(--brand-teal)" opacity="0.7" />
-      <text x="60" y="21" fontSize="9" fontFamily="monospace" fill="var(--muted-foreground)">
-        Ethel Global · all cases
-      </text>
-      <line x1="4" y1="30" x2="336" y2="30" stroke="var(--border)" />
+      <defs>
+        <linearGradient id="global-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="var(--gradient-from)" />
+          <stop offset="50%" stopColor="var(--gradient-via)" />
+          <stop offset="100%" stopColor="var(--gradient-to)" />
+        </linearGradient>
+        <clipPath id="global-window">
+          <rect x="6" y="6" width="388" height="288" rx="14" />
+        </clipPath>
+      </defs>
 
-      {/* query bar with globe glyph + scope pill */}
-      <rect x="14" y="40" width="312" height="24" rx="12" fill="var(--background)" stroke="var(--border)" />
-      <circle cx="28" cy="52" r="6.5" fill="none" stroke="var(--brand-teal)" strokeWidth="1.2" />
-      <path d="M21.5 52 h13 M28 45.5 c3 3 3 10 0 13 c-3 -3 -3 -10 0 -13" stroke="var(--brand-teal)" strokeWidth="1" fill="none" />
-      <text x="42" y="55.5" fontSize="9.5" fill="var(--foreground)">
-        Where else has this vendor appeared?
-      </text>
-      <rect x="250" y="45" width="70" height="14" rx="7" fill="var(--brand-teal)" opacity="0.14" />
-      <text x="285" y="55" fontSize="7.5" fontFamily="monospace" fill="var(--brand-teal)" textAnchor="middle">
-        ALL REGIONS
-      </text>
+      <g clipPath="url(#global-window)" fontFamily="var(--font-sans, sans-serif)">
+        {/* app surface */}
+        <rect x="6" y="6" width="388" height="288" fill="var(--card)" />
 
-      {/* results header */}
-      <text x="16" y="80" fontSize="8" fontFamily="monospace" fill="var(--muted-foreground)">
-        RELATED CASES · 3 REGIONS
-      </text>
+        {/* browser chrome */}
+        <rect x="6" y="6" width="388" height="30" fill="var(--secondary)" />
+        <circle cx="24" cy="21" r="4" fill="var(--destructive)" opacity="0.7" />
+        <circle cx="38" cy="21" r="4" fill="var(--brand-pink)" opacity="0.8" />
+        <circle cx="52" cy="21" r="4" fill="var(--brand-teal)" opacity="0.7" />
+        <rect x="120" y="13" width="180" height="16" rx="8" fill="var(--background)" opacity="0.6" />
+        <text x="134" y="25" fontSize="8.5" fill="var(--muted-foreground)">
+          app.mycm.com / cases
+        </text>
 
-      {/* ranked match rows */}
-      {rows.map((r, i) => {
-        const y = 88 + i * 26
-        return (
-          <g key={r.id}>
-            <rect x="14" y={y} width="312" height="22" rx="6" fill="var(--background)" stroke="var(--border)" />
-            <circle cx="26" cy={y + 11} r="3" fill="var(--brand-blue)" />
-            <text x="36" y={y + 14} fontSize="9" fontFamily="monospace" fontWeight="700" fill="var(--foreground)">
-              {r.id}
-            </text>
-            <text x="88" y={y + 14} fontSize="8.5" fill="var(--muted-foreground)">
-              {r.loc}
-            </text>
-            {/* match bar */}
-            <rect x={barX} y={y + 7.5} width={barW} height="7" rx="3.5" fill="var(--muted)" opacity="0.5" />
-            <rect x={barX} y={y + 7.5} width={(barW * r.pct) / 100} height="7" rx="3.5" fill="var(--brand-teal)" />
-            <text x="320" y={y + 14} fontSize="8.5" fontFamily="monospace" fontWeight="700" fill="var(--brand-teal)" textAnchor="end">
-              {r.pct}%
-            </text>
-          </g>
-        )
-      })}
+        {/* left: case list */}
+        <rect x="6" y="36" width="120" height="258" fill="var(--background)" opacity="0.4" />
+        <text x="20" y="58" fontSize="8" fontWeight="700" letterSpacing="1.2" fill="var(--muted-foreground)">
+          CASES
+        </text>
+        {cases.map((c, i) => {
+          const y = 68 + i * 40
+          return (
+            <g key={c.id}>
+              <rect
+                x="16"
+                y={y}
+                width="100"
+                height="32"
+                rx="7"
+                fill={c.active ? "var(--brand-pink)" : "var(--card)"}
+                opacity={c.active ? 0.14 : 0.9}
+                stroke={c.active ? "url(#global-grad)" : "var(--border)"}
+                strokeWidth={c.active ? 1.4 : 1}
+              />
+              <circle cx="30" cy={y + 16} r="6" fill="url(#global-grad)" opacity={c.active ? 1 : 0.4} />
+              <text x="42" y={y + 13} fontSize="7.5" fontWeight="600" fill="var(--foreground)" opacity={c.active ? 1 : 0.7}>
+                {c.id}
+              </text>
+              <text x="42" y={y + 24} fontSize="7" fill="var(--muted-foreground)">
+                {c.t}
+              </text>
+            </g>
+          )
+        })}
+
+        {/* right: main case panel (dimmed behind the pop-up) */}
+        <text x="140" y="58" fontSize="10" fontWeight="700" fill="var(--foreground)">
+          Case #4821
+        </text>
+        <rect x="140" y="70" width="240" height="8" rx="4" fill="var(--muted)" opacity="0.5" />
+        <rect x="140" y="84" width="210" height="8" rx="4" fill="var(--muted)" opacity="0.4" />
+        <rect x="140" y="98" width="228" height="8" rx="4" fill="var(--muted)" opacity="0.35" />
+
+        {/* dim overlay */}
+        <rect x="6" y="36" width="388" height="258" fill="var(--background)" opacity="0.55" />
+
+        {/* -------- Ethel pop-up dialog -------- */}
+        <g>
+          <rect x="128" y="70" width="256" height="196" rx="14" fill="var(--card)" stroke="url(#global-grad)" strokeWidth="1.4" />
+          {/* pop-up header */}
+          <rect x="128" y="70" width="256" height="34" rx="14" fill="url(#global-grad)" opacity="0.1" />
+          <rect x="128" y="90" width="256" height="14" fill="var(--card)" />
+          <circle cx="148" cy="88" r="9" fill="url(#global-grad)" opacity="0.22" />
+          <path
+            d="M148 82l1.4 3 3.2.3-2.4 2.1.7 3.1-2.9-1.6-2.9 1.6.7-3.1-2.4-2.1 3.2-.3z"
+            fill="url(#global-grad)"
+          />
+          <text x="164" y="86" fontSize="9.5" fontWeight="700" fill="var(--foreground)">
+            Ask Ethel Global
+          </text>
+          <text x="164" y="97" fontSize="7" fill="var(--muted-foreground)">
+            Querying all cases · every region
+          </text>
+          <rect x="340" y="80" width="34" height="15" rx="7.5" fill="var(--brand-teal)" opacity="0.14" />
+          <circle cx="350" cy="87.5" r="2.5" fill="var(--brand-teal)" />
+          <text x="356" y="90.5" fontSize="6.5" fontFamily="monospace" fill="var(--brand-teal)">
+            live
+          </text>
+
+          {/* the question */}
+          <rect x="142" y="112" width="228" height="22" rx="11" fill="var(--background)" stroke="var(--border)" />
+          <text x="154" y="126" fontSize="8.5" fill="var(--foreground)">
+            Where else has this vendor appeared?
+          </text>
+
+          {/* results label */}
+          <text x="144" y="150" fontSize="7" fontFamily="monospace" fill="var(--muted-foreground)">
+            3 SIMILAR CASES FOUND
+          </text>
+
+          {/* match rows */}
+          {matches.map((m, i) => {
+            const y = 156 + i * 30
+            return (
+              <g key={m.id}>
+                <rect x="142" y={y} width="228" height="24" rx="6" fill="var(--background)" stroke="var(--border)" />
+                <circle cx="154" cy={y + 12} r="3" fill="var(--brand-blue)" />
+                <text x="164" y={y + 15} fontSize="8" fontFamily="monospace" fontWeight="700" fill="var(--foreground)">
+                  {m.id}
+                </text>
+                <text x="212" y={y + 15} fontSize="7.5" fill="var(--muted-foreground)">
+                  {m.loc}
+                </text>
+                <rect x={barX} y={y + 8.5} width={barW} height="6" rx="3" fill="var(--muted)" opacity="0.5" />
+                <rect x={barX} y={y + 8.5} width={(barW * m.pct) / 100} height="6" rx="3" fill="url(#global-grad)" />
+                <text x="366" y={y + 15} fontSize="7.5" fontFamily="monospace" fontWeight="700" fill="var(--brand-teal)" textAnchor="end">
+                  {m.pct}%
+                </text>
+              </g>
+            )
+          })}
+        </g>
+      </g>
+
+      {/* window frame */}
+      <rect x="6" y="6" width="388" height="288" rx="14" fill="none" stroke="var(--border)" />
     </svg>
   )
 }
@@ -306,6 +388,89 @@ function ExportGraphic() {
 /* Bento grid — everything on one screen, no empty cells               */
 /* ------------------------------------------------------------------ */
 
+/** Deep-space backdrop: gradient void, twinkling stars, drifting nebulae, undulating waves. */
+function SpaceBackdrop() {
+  // deterministic star field (avoids hydration mismatch)
+  const stars = Array.from({ length: 46 }, (_, i) => {
+    const r = (n: number) => {
+      const x = Math.sin((i + 1) * n) * 10000
+      return x - Math.floor(x)
+    }
+    return {
+      left: r(12.9898) * 100,
+      top: r(78.233) * 100,
+      size: 0.6 + r(43.12) * 1.8,
+      dur: 3 + r(91.7) * 5,
+      delay: r(27.4) * 5,
+      max: 0.6 + r(11.3) * 0.4,
+    }
+  })
+
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* void gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(120%_140%_at_20%_-10%,color-mix(in_oklch,var(--brand-blue)_55%,black)_0%,#0a1024_45%,#05060f_100%)]" />
+
+      {/* drifting nebula blobs */}
+      <span
+        className="animate-blob absolute -left-12 top-0 size-52 rounded-full bg-brand-teal opacity-30 blur-3xl"
+        style={{ "--bx": "44px", "--by": "26px", "--bd": "15s" } as React.CSSProperties}
+      />
+      <span
+        className="animate-blob absolute right-2 -top-10 size-44 rounded-full bg-brand-pink opacity-25 blur-3xl"
+        style={{ "--bx": "-32px", "--by": "30px", "--bd": "18s" } as React.CSSProperties}
+      />
+      <span
+        className="animate-blob absolute bottom-0 left-1/3 size-56 rounded-full bg-brand-blue opacity-30 blur-3xl"
+        style={{ "--bx": "28px", "--by": "-24px", "--bd": "13s" } as React.CSSProperties}
+      />
+
+      {/* twinkling stars */}
+      {stars.map((s, i) => (
+        <span
+          key={i}
+          className="animate-twinkle absolute rounded-full bg-white"
+          style={
+            {
+              left: `${s.left}%`,
+              top: `${s.top}%`,
+              width: `${s.size}px`,
+              height: `${s.size}px`,
+              "--td": `${s.dur}s`,
+              "--tmax": s.max,
+              "--tmin": 0.15,
+              animationDelay: `${s.delay}s`,
+            } as React.CSSProperties
+          }
+        />
+      ))}
+
+      {/* undulating waves along the bottom */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2">
+        {[
+          { fill: "var(--brand-blue)", op: 0.28, ws: "22s", y: "translateY(18%)" },
+          { fill: "var(--brand-teal)", op: 0.22, ws: "16s", y: "translateY(30%)" },
+          { fill: "var(--brand-pink)", op: 0.16, ws: "28s", y: "translateY(42%)" },
+        ].map((w, i) => (
+          <div
+            key={i}
+            className="animate-wave-scroll absolute inset-x-0 bottom-0 h-full w-[200%]"
+            style={{ "--ws": w.ws, transform: w.y } as React.CSSProperties}
+          >
+            <svg viewBox="0 0 2880 200" preserveAspectRatio="none" className="h-full w-full">
+              <path
+                d="M0 90 C 240 30 480 150 720 90 C 960 30 1200 150 1440 90 C 1680 30 1920 150 2160 90 C 2400 30 2640 150 2880 90 L2880 200 L0 200 Z"
+                fill={w.fill}
+                opacity={w.op}
+              />
+            </svg>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 /** A full-width product row: console graphic on one side, content on the other. */
 function ProductCard({
   variant,
@@ -316,6 +481,7 @@ function ProductCard({
   features,
   graphic,
   reverse,
+  cta,
 }: {
   variant: "glass" | "filled"
   icon: typeof Search
@@ -325,6 +491,7 @@ function ProductCard({
   features: string[]
   graphic: React.ReactNode
   reverse?: boolean
+  cta?: React.ReactNode
 }) {
   const filled = variant === "filled"
   return (
@@ -335,35 +502,7 @@ function ProductCard({
           : "border-border bg-card/70 backdrop-blur"
       }`}
     >
-      {filled && (
-        <>
-          {/* animated gradient wave base */}
-          <div
-            aria-hidden="true"
-            className="animate-wave pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,color-mix(in_oklch,var(--brand-teal)_92%,black_8%),color-mix(in_oklch,var(--brand-blue)_86%,black_12%),color-mix(in_oklch,var(--brand-teal)_88%,black_6%))]"
-          />
-          {/* floating color blobs */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-            <span
-              className="animate-blob absolute -left-10 top-2 size-40 rounded-full bg-brand-teal opacity-40 blur-2xl"
-              style={{ "--bx": "40px", "--by": "20px", "--bd": "13s" } as React.CSSProperties}
-            />
-            <span
-              className="animate-blob absolute right-6 -top-8 size-36 rounded-full bg-brand-pink opacity-25 blur-2xl"
-              style={{ "--bx": "-30px", "--by": "26px", "--bd": "16s" } as React.CSSProperties}
-            />
-            <span
-              className="animate-blob absolute -bottom-10 right-1/3 size-44 rounded-full bg-brand-blue opacity-35 blur-2xl"
-              style={{ "--bx": "24px", "--by": "-22px", "--bd": "11s" } as React.CSSProperties}
-            />
-          </div>
-          {/* fine grid texture */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:22px_22px]"
-          />
-        </>
-      )}
+      {filled && <SpaceBackdrop />}
       <div
         className={`relative flex flex-col gap-6 md:flex-row md:items-center md:gap-10 ${
           reverse ? "md:flex-row-reverse" : ""
@@ -415,6 +554,7 @@ function ProductCard({
               </li>
             ))}
           </ul>
+          {cta && <div className="mt-5">{cta}</div>}
         </div>
 
         {/* console graphic beside the content */}
@@ -490,6 +630,13 @@ function BetaShowcase() {
         ]}
         graphic={<NetworkGraphic />}
         reverse
+        cta={
+          <ViewUseCasesButton className="btn-anim inline-flex items-center gap-2 rounded-full bg-primary-foreground px-5 py-2.5 text-sm font-semibold text-brand-blue shadow-lg hover:gap-3">
+            <Globe className="size-4" />
+            See all use cases
+            <ArrowRight className="size-4" />
+          </ViewUseCasesButton>
+        }
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -591,6 +738,9 @@ export function BetaProgram() {
 
       {/* interactive product demo */}
       <BetaDemoModal />
+
+      {/* Ethel Global use cases */}
+      <UseCasesModal />
 
       {/* signup modal */}
       {open && (
