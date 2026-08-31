@@ -291,92 +291,106 @@ function ExportGraphic() {
 /* Bento grid — everything on one screen, no empty cells               */
 /* ------------------------------------------------------------------ */
 
-function LeadTile({
+/** A full-width product row: console graphic on one side, content on the other. */
+function ProductCard({
   variant,
   icon: Icon,
+  eyebrow,
   name,
   tagline,
   features,
-  className,
+  graphic,
+  reverse,
 }: {
   variant: "glass" | "filled"
   icon: typeof Search
+  eyebrow: string
   name: string
   tagline: string
   features: string[]
-  className?: string
+  graphic: React.ReactNode
+  reverse?: boolean
 }) {
   const filled = variant === "filled"
   return (
     <div
-      className={`relative flex flex-col justify-end overflow-hidden rounded-2xl border p-5 ${
+      className={`relative overflow-hidden rounded-3xl border p-6 sm:p-8 ${
         filled
-          ? "border-transparent bg-[linear-gradient(145deg,color-mix(in_oklch,var(--brand-teal)_88%,black_6%),color-mix(in_oklch,var(--brand-blue)_82%,black_8%))] text-primary-foreground shadow-lg"
+          ? "border-transparent bg-[linear-gradient(135deg,color-mix(in_oklch,var(--brand-teal)_90%,black_6%),color-mix(in_oklch,var(--brand-blue)_84%,black_10%))] text-primary-foreground shadow-xl"
           : "border-border bg-card/70 backdrop-blur"
-      } ${className ?? ""}`}
+      }`}
     >
       {filled && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:18px_18px]"
+          className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:22px_22px]"
         />
       )}
-      <div className="relative">
-        <div className="flex items-center gap-2">
+      <div
+        className={`relative flex flex-col gap-6 md:flex-row md:items-center md:gap-10 ${
+          reverse ? "md:flex-row-reverse" : ""
+        }`}
+      >
+        {/* content */}
+        <div className="md:flex-1">
           <span
-            className={`flex size-8 items-center justify-center rounded-lg ${
-              filled ? "bg-primary-foreground/20" : "bg-brand-blue/15"
+            className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest ${
+              filled
+                ? "bg-primary-foreground/15 text-primary-foreground"
+                : "bg-brand-blue/10 text-brand-blue"
             }`}
           >
-            <Icon
-              className={`size-4 ${filled ? "text-primary-foreground" : "text-brand-blue"}`}
-            />
+            {eyebrow}
           </span>
-          <h3 className="text-base font-semibold">{name}</h3>
+          <div className="mt-3 flex items-center gap-2.5">
+            <span
+              className={`flex size-9 items-center justify-center rounded-xl ${
+                filled ? "bg-primary-foreground/20" : "bg-brand-blue/15"
+              }`}
+            >
+              <Icon className={`size-5 ${filled ? "text-primary-foreground" : "text-brand-blue"}`} />
+            </span>
+            <h3 className="text-xl font-bold tracking-tight sm:text-2xl">{name}</h3>
+          </div>
+          <p
+            className={`mt-2.5 max-w-md text-sm leading-relaxed ${
+              filled ? "text-primary-foreground/85" : "text-muted-foreground"
+            }`}
+          >
+            {tagline}
+          </p>
+          <ul className="mt-4 space-y-2.5">
+            {features.map((f) => (
+              <li key={f} className="flex items-start gap-2.5 text-[13px] leading-snug">
+                <span
+                  className={`mt-px flex size-4 shrink-0 items-center justify-center rounded-full ${
+                    filled ? "bg-primary-foreground/20" : "bg-brand-teal/15"
+                  }`}
+                >
+                  <Check
+                    className={`size-3 ${filled ? "text-primary-foreground" : "text-brand-teal"}`}
+                  />
+                </span>
+                <span className={filled ? "text-primary-foreground/95" : "text-foreground/90"}>
+                  {f}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <p
-          className={`mt-1.5 text-[13px] leading-relaxed ${
-            filled ? "text-primary-foreground/80" : "text-muted-foreground"
-          }`}
-        >
-          {tagline}
-        </p>
-        <ul className="mt-3 space-y-1.5">
-          {features.map((f) => (
-            <li key={f} className="flex items-start gap-2 text-[12px] leading-snug">
-              <Check
-                className={`mt-0.5 size-3.5 shrink-0 ${
-                  filled ? "text-primary-foreground" : "text-brand-teal"
-                }`}
-              />
-              <span className={filled ? "text-primary-foreground/90" : "text-foreground/90"}>
-                {f}
-              </span>
-            </li>
-          ))}
-        </ul>
+
+        {/* console graphic beside the content */}
+        <div className="md:w-[44%] md:shrink-0">
+          <div className="animate-float overflow-hidden rounded-xl shadow-2xl ring-1 ring-black/10 [&_svg]:block [&_svg]:h-auto [&_svg]:w-full">
+            {graphic}
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
-/** A floating panel that holds a software graphic (the SVG carries its own chrome). */
-function FloatingConsole({
-  graphic,
-  className,
-}: {
-  graphic: React.ReactNode
-  className?: string
-}) {
-  return (
-    <div
-      className={`animate-float overflow-hidden rounded-xl shadow-2xl ring-1 ring-black/10 [&_svg]:!h-auto [&_svg]:!w-full ${className ?? ""}`}
-    >
-      {graphic}
-    </div>
-  )
-}
-
+/** A compact secondary-feature card with a small software graphic. */
 function MiniTile({
   icon: Icon,
   tone,
@@ -385,103 +399,77 @@ function MiniTile({
   graphic,
 }: {
   icon: typeof Search
-  tone: "blue" | "teal" | "pink"
+  tone: "blue" | "pink"
   title: string
   body: string
   graphic: React.ReactNode
 }) {
-  const accent =
-    tone === "blue" ? "text-brand-blue" : tone === "teal" ? "text-brand-teal" : "text-brand-pink"
-  const bg =
-    tone === "blue" ? "bg-brand-blue/15" : tone === "teal" ? "bg-brand-teal/15" : "bg-brand-pink/15"
+  const accent = tone === "blue" ? "text-brand-blue" : "text-brand-pink"
+  const bg = tone === "blue" ? "bg-brand-blue/15" : "bg-brand-pink/15"
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border border-border bg-card/60 p-4 backdrop-blur">
-      <div className="flex items-center gap-2">
-        <span className={`flex size-7 items-center justify-center rounded-lg ${bg}`}>
-          <Icon className={`size-3.5 ${accent}`} />
-        </span>
-        <p className="text-[13px] font-semibold text-foreground">{title}</p>
+    <div className="flex items-center gap-4 rounded-2xl border border-border bg-card/60 p-4 backdrop-blur">
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <span className={`flex size-7 items-center justify-center rounded-lg ${bg}`}>
+            <Icon className={`size-3.5 ${accent}`} />
+          </span>
+          <p className="text-sm font-semibold text-foreground">{title}</p>
+        </div>
+        <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{body}</p>
       </div>
-      <p className="mt-1.5 text-[11px] leading-relaxed text-muted-foreground">{body}</p>
-      <div className="mt-auto h-[52px] pt-2">{graphic}</div>
+      <div className="w-24 shrink-0 [&_svg]:block [&_svg]:h-auto [&_svg]:w-full">{graphic}</div>
     </div>
   )
 }
 
-function BentoGrid() {
+function BetaShowcase() {
   return (
-    <div className="grid gap-3 md:grid-cols-6 md:grid-rows-[auto_138px]">
-      {/* Insights lead — glass, console floats over its left */}
-      <LeadTile
-        className="md:col-span-3 md:pt-[108px]"
+    <div className="space-y-4">
+      <ProductCard
         variant="glass"
         icon={Search}
+        eyebrow="AI analyst for case data"
         name="Ethel Insights"
-        tagline="Ask your whole dataset in plain language."
+        tagline="Ask plain-language questions across an entire EcoReports dataset and get instant, source-cited answers — no report-building required."
         features={[
-          "Query data directly — no report-building",
-          "Answers cite case IDs & source docs",
+          "Query the underlying dataset directly, in plain language",
+          "Every answer cites its case IDs and source documents",
           "Works in any submission language",
         ]}
+        graphic={<ConsoleGraphic />}
       />
 
-      {/* Global lead — filled, stands out; console floats over its right */}
-      <LeadTile
-        className="md:col-span-3 md:pt-[108px]"
+      <ProductCard
         variant="filled"
         icon={Globe}
+        eyebrow="Cross-case reasoning"
         name="Ethel Global"
-        tagline="Reasoning across every case in your org."
+        tagline="Reason across every case in your organization, within permission scope — trends, comparisons, and connections from anywhere."
         features={[
-          "Similar cases surfaced from anywhere",
-          "Org-wide trends & comparisons",
-          "Multi-case briefs in seconds",
+          "Surface similar cases and connections org-wide",
+          "Spot late-surfacing patterns and anomalies automatically",
+          "Generate multi-case briefs in seconds",
         ]}
+        graphic={<NetworkGraphic />}
+        reverse
       />
 
-      {/* CTA tile */}
-      <div className="flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-gradient-from/20 via-gradient-via/15 to-gradient-to/20 p-5 md:col-span-2">
-        <div>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-blue/30 bg-background/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-brand-blue">
-            <Sparkles className="size-3" />
-            Private beta
-          </span>
-          <p className="mt-3 text-pretty text-[15px] font-semibold leading-snug text-foreground">
-            Two new superpowers, layered on top of case summaries.
-          </p>
-        </div>
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-          <JoinBetaButton
-            count={20}
-            className="btn-anim btn-anim-primary inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-4 py-2.5 text-sm font-semibold text-primary-foreground"
-          >
-            <Sparkles className="size-4" />
-            Join the beta
-          </JoinBetaButton>
-          <WatchDemoButton className="btn-anim inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-card/70 px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-card">
-            <PlayCircle className="size-4 text-brand-teal" />
-            Demo
-          </WatchDemoButton>
-        </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <MiniTile
+          icon={Radar}
+          tone="pink"
+          title="Pattern radar"
+          body="Category spikes, location anomalies, and cross-case connections flagged automatically."
+          graphic={<SpikeGraphic />}
+        />
+        <MiniTile
+          icon={FileDown}
+          tone="blue"
+          title="Document export"
+          body="Word, Excel, PDF & PowerPoint — with custom columns and preview before download."
+          graphic={<ExportGraphic />}
+        />
       </div>
-
-      {/* Pattern radar mini tile */}
-      <MiniTile
-        icon={Radar}
-        tone="pink"
-        title="Pattern radar"
-        body="Category spikes and anomalies flagged automatically."
-        graphic={<SpikeGraphic />}
-      />
-
-      {/* Document export mini tile */}
-      <MiniTile
-        icon={FileDown}
-        tone="blue"
-        title="Document export"
-        body="Word, Excel, PDF & PowerPoint — with custom columns."
-        graphic={<ExportGraphic />}
-      />
     </div>
   )
 }
@@ -530,39 +518,36 @@ export function BetaProgram() {
           className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(ellipse_50%_60%_at_15%_0%,color-mix(in_oklch,var(--brand-blue)_16%,transparent),transparent_70%),radial-gradient(ellipse_50%_60%_at_85%_100%,color-mix(in_oklch,var(--brand-teal)_16%,transparent),transparent_70%)]"
         />
 
-        <div className="relative mx-auto max-w-6xl px-5 py-8">
+        <div className="relative mx-auto max-w-6xl px-5 py-14">
           {/* header */}
-          <div className="mx-auto mb-4 max-w-2xl text-center">
+          <div className="mx-auto mb-8 max-w-2xl text-center">
             <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-blue">
               <Sparkles className="size-3.5" />
               Private beta
             </span>
-            <h2 className="text-balance text-2xl font-bold tracking-tight sm:text-3xl">
+            <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
               Get early access to <span className="text-gradient">what&apos;s next</span> for Ethel
             </h2>
-          </div>
-
-          {/* mobile: consoles stacked above the grid */}
-          <div className="mb-4 grid gap-3 sm:grid-cols-2 md:hidden">
-            <FloatingConsole graphic={<ConsoleGraphic />} />
-            <FloatingConsole graphic={<NetworkGraphic />} />
-          </div>
-
-          {/* desktop: Insights console floats over the left tile, Global over the right */}
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-20 hidden md:block">
-              <FloatingConsole
-                graphic={<ConsoleGraphic />}
-                className="pointer-events-auto absolute -top-5 left-3 w-[244px] -rotate-2 transition-transform duration-500 hover:rotate-0 lg:left-6"
-              />
-              <FloatingConsole
-                graphic={<NetworkGraphic />}
-                className="pointer-events-auto absolute -top-5 right-3 w-[244px] rotate-2 transition-transform duration-500 hover:rotate-0 lg:right-6"
-              />
+            <p className="mx-auto mt-3 max-w-lg text-pretty text-sm leading-relaxed text-muted-foreground">
+              Two new superpowers layered on top of case summaries — an AI analyst for your data and
+              reasoning across every case in your organization.
+            </p>
+            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <JoinBetaButton
+                count={22}
+                className="btn-anim btn-anim-primary inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-7 py-3.5 text-base font-semibold text-primary-foreground"
+              >
+                <Sparkles className="size-4" />
+                Join the beta
+              </JoinBetaButton>
+              <WatchDemoButton className="btn-anim inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-7 py-3.5 text-base font-semibold text-foreground hover:bg-card">
+                <PlayCircle className="size-5 text-brand-teal" />
+                Watch the demo
+              </WatchDemoButton>
             </div>
-
-            <BentoGrid />
           </div>
+
+          <BetaShowcase />
         </div>
       </div>
 
