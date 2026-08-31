@@ -171,59 +171,74 @@ function ConsoleGraphic() {
   )
 }
 
-/** Ethel Global — cross-case reasoning as a small network of linked cases. */
+/** Ethel Global — an org-wide cross-case query console with a ranked match list. */
 function NetworkGraphic() {
-  const nodes = [
-    { x: 62, y: 44 },
-    { x: 40, y: 118 },
-    { x: 130, y: 132 },
-    { x: 250, y: 40 },
-    { x: 300, y: 104 },
-    { x: 214, y: 128 },
+  const rows = [
+    { id: "CS-4471", loc: "Dallas, US", pct: 96 },
+    { id: "CS-2210", loc: "London, UK", pct: 91 },
+    { id: "CS-8834", loc: "Toronto, CA", pct: 84 },
   ]
-  const cx = 170
-  const cy = 88
+  const barX = 176
+  const barW = 96
   return (
     <svg
       viewBox="0 0 340 176"
       className="h-full w-full"
       role="img"
-      aria-label="A central case linked to similar cases across the organization"
+      aria-label="Ethel Global querying every case across the organization and ranking matches by region"
     >
+      {/* window */}
       <rect x="4" y="4" width="332" height="168" rx="12" fill="var(--card)" stroke="var(--border)" />
-      {/* links */}
-      {nodes.map((n, i) => (
-        <line
-          key={i}
-          x1={cx}
-          y1={cy}
-          x2={n.x}
-          y2={n.y}
-          stroke="var(--brand-teal)"
-          strokeWidth="1.2"
-          opacity="0.45"
-          strokeDasharray="3 3"
-        />
-      ))}
-      {/* satellite nodes */}
-      {nodes.map((n, i) => (
-        <g key={`n-${i}`}>
-          <circle cx={n.x} cy={n.y} r="12" fill="var(--brand-blue)" opacity="0.14" />
-          <circle cx={n.x} cy={n.y} r="6" fill="var(--brand-blue)" opacity="0.55" />
-        </g>
-      ))}
-      {/* central case */}
-      <circle cx={cx} cy={cy} r="26" fill="var(--brand-teal)" opacity="0.16" />
-      <circle cx={cx} cy={cy} r="16" fill="var(--brand-teal)" />
-      <text x={cx} y={cy + 3.5} fontSize="9" fontWeight="700" fill="var(--primary-foreground)" textAnchor="middle">
-        case
+      {/* title bar */}
+      <rect x="4" y="4" width="332" height="26" rx="12" fill="var(--secondary)" />
+      <rect x="4" y="18" width="332" height="12" fill="var(--secondary)" />
+      <circle cx="20" cy="17" r="3.5" fill="var(--destructive)" opacity="0.7" />
+      <circle cx="32" cy="17" r="3.5" fill="var(--brand-pink)" opacity="0.7" />
+      <circle cx="44" cy="17" r="3.5" fill="var(--brand-teal)" opacity="0.7" />
+      <text x="60" y="21" fontSize="9" fontFamily="monospace" fill="var(--muted-foreground)">
+        Ethel Global · all cases
       </text>
-      {/* match badge */}
-      <rect x="232" y="12" width="96" height="18" rx="9" fill="var(--background)" stroke="var(--border)" />
-      <circle cx="245" cy="21" r="3" fill="var(--brand-teal)" />
-      <text x="254" y="24.5" fontSize="8" fontFamily="monospace" fill="var(--muted-foreground)">
-        6 similar found
+      <line x1="4" y1="30" x2="336" y2="30" stroke="var(--border)" />
+
+      {/* query bar with globe glyph + scope pill */}
+      <rect x="14" y="40" width="312" height="24" rx="12" fill="var(--background)" stroke="var(--border)" />
+      <circle cx="28" cy="52" r="6.5" fill="none" stroke="var(--brand-teal)" strokeWidth="1.2" />
+      <path d="M21.5 52 h13 M28 45.5 c3 3 3 10 0 13 c-3 -3 -3 -10 0 -13" stroke="var(--brand-teal)" strokeWidth="1" fill="none" />
+      <text x="42" y="55.5" fontSize="9.5" fill="var(--foreground)">
+        Where else has this vendor appeared?
       </text>
+      <rect x="250" y="45" width="70" height="14" rx="7" fill="var(--brand-teal)" opacity="0.14" />
+      <text x="285" y="55" fontSize="7.5" fontFamily="monospace" fill="var(--brand-teal)" textAnchor="middle">
+        ALL REGIONS
+      </text>
+
+      {/* results header */}
+      <text x="16" y="80" fontSize="8" fontFamily="monospace" fill="var(--muted-foreground)">
+        RELATED CASES · 3 REGIONS
+      </text>
+
+      {/* ranked match rows */}
+      {rows.map((r, i) => {
+        const y = 88 + i * 26
+        return (
+          <g key={r.id}>
+            <rect x="14" y={y} width="312" height="22" rx="6" fill="var(--background)" stroke="var(--border)" />
+            <circle cx="26" cy={y + 11} r="3" fill="var(--brand-blue)" />
+            <text x="36" y={y + 14} fontSize="9" fontFamily="monospace" fontWeight="700" fill="var(--foreground)">
+              {r.id}
+            </text>
+            <text x="88" y={y + 14} fontSize="8.5" fill="var(--muted-foreground)">
+              {r.loc}
+            </text>
+            {/* match bar */}
+            <rect x={barX} y={y + 7.5} width={barW} height="7" rx="3.5" fill="var(--muted)" opacity="0.5" />
+            <rect x={barX} y={y + 7.5} width={(barW * r.pct) / 100} height="7" rx="3.5" fill="var(--brand-teal)" />
+            <text x="320" y={y + 14} fontSize="8.5" fontFamily="monospace" fontWeight="700" fill="var(--brand-teal)" textAnchor="end">
+              {r.pct}%
+            </text>
+          </g>
+        )
+      })}
     </svg>
   )
 }
@@ -316,15 +331,38 @@ function ProductCard({
     <div
       className={`relative overflow-hidden rounded-3xl border p-6 sm:p-8 ${
         filled
-          ? "border-transparent bg-[linear-gradient(135deg,color-mix(in_oklch,var(--brand-teal)_90%,black_6%),color-mix(in_oklch,var(--brand-blue)_84%,black_10%))] text-primary-foreground shadow-xl"
+          ? "border-transparent text-primary-foreground shadow-xl"
           : "border-border bg-card/70 backdrop-blur"
       }`}
     >
       {filled && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:22px_22px]"
-        />
+        <>
+          {/* animated gradient wave base */}
+          <div
+            aria-hidden="true"
+            className="animate-wave pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,color-mix(in_oklch,var(--brand-teal)_92%,black_8%),color-mix(in_oklch,var(--brand-blue)_86%,black_12%),color-mix(in_oklch,var(--brand-teal)_88%,black_6%))]"
+          />
+          {/* floating color blobs */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+            <span
+              className="animate-blob absolute -left-10 top-2 size-40 rounded-full bg-brand-teal opacity-40 blur-2xl"
+              style={{ "--bx": "40px", "--by": "20px", "--bd": "13s" } as React.CSSProperties}
+            />
+            <span
+              className="animate-blob absolute right-6 -top-8 size-36 rounded-full bg-brand-pink opacity-25 blur-2xl"
+              style={{ "--bx": "-30px", "--by": "26px", "--bd": "16s" } as React.CSSProperties}
+            />
+            <span
+              className="animate-blob absolute -bottom-10 right-1/3 size-44 rounded-full bg-brand-blue opacity-35 blur-2xl"
+              style={{ "--bx": "24px", "--by": "-22px", "--bd": "11s" } as React.CSSProperties}
+            />
+          </div>
+          {/* fine grid texture */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:22px_22px]"
+          />
+        </>
       )}
       <div
         className={`relative flex flex-col gap-6 md:flex-row md:items-center md:gap-10 ${

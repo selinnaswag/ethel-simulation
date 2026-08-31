@@ -360,12 +360,51 @@
   animation: ethel-star-burst 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* Animated gradient wave background (Ethel Global card) */
+@keyframes ethel-wave-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.animate-wave {
+  background-size: 220% 220%;
+  animation: ethel-wave-shift 14s ease-in-out infinite;
+}
+
+/* Floating color blobs that drift behind the content */
+@keyframes ethel-blob-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(var(--bx, 18px), var(--by, -14px)) scale(1.12);
+  }
+  66% {
+    transform: translate(calc(var(--bx, 18px) * -0.6), calc(var(--by, -14px) * -0.8)) scale(0.92);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+.animate-blob {
+  animation: ethel-blob-drift var(--bd, 12s) ease-in-out infinite;
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .btn-anim,
   .animate-float,
   .animate-pulse-ring,
   .animate-fade-up,
-  .animate-beta-pop {
+  .animate-beta-pop,
+  .animate-wave,
+  .animate-blob {
     animation: none !important;
     transition: none !important;
   }
