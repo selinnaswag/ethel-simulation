@@ -17,6 +17,8 @@ import {
   X,
   Check,
   PlayCircle,
+  LayoutGrid,
+  PanelTop,
 } from "lucide-react"
 import { BetaDemoModal, WatchDemoButton } from "@/components/beta-demo"
 
@@ -119,8 +121,7 @@ const insights = [
   {
     icon: ShieldCheck,
     problem: "Untraceable decisions",
-    solution:
-      "Every answer cites its case IDs and source documents, in any submission language.",
+    solution: "Every answer cites its case IDs and source documents, in any submission language.",
   },
 ]
 
@@ -152,7 +153,256 @@ const globalPoints = [
   },
 ]
 
+/* ------------------------------------------------------------------ */
+/* Variant A — Tabbed showcase                                         */
+/* ------------------------------------------------------------------ */
+
+function InsightsPreview() {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-background/70">
+      <div className="flex items-center gap-2 border-b border-border/70 bg-secondary/40 px-4 py-2.5 font-mono text-[11px] text-muted-foreground">
+        <Search className="size-3.5 text-brand-blue" />
+        EcoReports · Ask the dataset
+      </div>
+      <div className="space-y-3 p-4">
+        <div className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-brand-blue/15 px-3.5 py-2 text-sm text-foreground">
+          Which categories spiked in Q3 vs Q2?
+        </div>
+        <div className="max-w-[92%] rounded-2xl rounded-bl-sm border border-border bg-card px-3.5 py-2.5 text-sm leading-relaxed text-foreground">
+          Retaliation reports rose <span className="font-semibold text-brand-teal">+41%</span>, driven
+          by the Dallas and LA locations.
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {["CS-4471", "CS-4488", "CS-4502"].map((id) => (
+              <span
+                key={id}
+                className="rounded-md border border-brand-teal/30 bg-brand-teal/10 px-1.5 py-0.5 font-mono text-[10px] text-brand-teal"
+              >
+                {id}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function GlobalPreview() {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border bg-background/70">
+      <div className="flex items-center gap-2 border-b border-border/70 bg-secondary/40 px-4 py-2.5 font-mono text-[11px] text-muted-foreground">
+        <Globe className="size-3.5 text-brand-teal" />
+        Org-wide · Similar cases
+      </div>
+      <div className="space-y-2.5 p-4">
+        {[
+          { id: "CS-3120", label: "Same subject · 3 overlapping findings", pct: 92 },
+          { id: "CS-2884", label: "Same location · similar allegation", pct: 78 },
+          { id: "CS-2610", label: "Related witness statements", pct: 64 },
+        ].map((row) => (
+          <div key={row.id} className="rounded-lg border border-border bg-card px-3 py-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-mono text-xs text-foreground">{row.id}</span>
+              <span className="font-semibold text-brand-teal">{row.pct}%</span>
+            </div>
+            <p className="mt-0.5 text-xs text-muted-foreground">{row.label}</p>
+            <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-secondary">
+              <div className="h-full rounded-full bg-brand-teal" style={{ width: `${row.pct}%` }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function TabbedShowcase() {
+  const [product, setProduct] = useState<"insights" | "global">("insights")
+  const isInsights = product === "insights"
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-border bg-card/60 backdrop-blur">
+      {/* product tabs */}
+      <div className="flex border-b border-border/70">
+        {[
+          { key: "insights" as const, name: "Ethel Insights", icon: Search, tone: "text-brand-blue" },
+          { key: "global" as const, name: "Ethel Global", icon: Globe, tone: "text-brand-teal" },
+        ].map((t) => {
+          const Icon = t.icon
+          const on = product === t.key
+          return (
+            <button
+              key={t.key}
+              type="button"
+              onClick={() => setProduct(t.key)}
+              className={`relative flex flex-1 items-center justify-center gap-2 px-4 py-3.5 text-sm font-semibold transition-colors ${
+                on ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Icon className={`size-4 ${on ? t.tone : ""}`} />
+              {t.name}
+              {on && (
+                <span className="absolute inset-x-6 bottom-0 h-0.5 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to" />
+              )}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* body */}
+      <div key={product} className="grid animate-fade-up gap-6 p-6 md:grid-cols-[1.05fr_1fr]">
+        {/* feature list */}
+        <div>
+          <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+            {isInsights
+              ? "From any EcoReports report, ask plain-language questions across the entire dataset and get instant, source-cited answers."
+              : "From the case list, a dashboard, or anywhere — Ethel reasons across cases org-wide, within your permission scope."}
+          </p>
+          <ul className="space-y-3.5">
+            {(isInsights ? insights : globalPoints).map((item) => {
+              const Icon = item.icon
+              const title = "problem" in item ? item.problem : item.title
+              const body = "solution" in item ? item.solution : item.body
+              return (
+                <li key={title} className="flex gap-3">
+                  <span
+                    className={`mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg ${
+                      isInsights ? "bg-brand-teal/15" : "bg-brand-blue/15"
+                    }`}
+                  >
+                    <Icon className={`size-4 ${isInsights ? "text-brand-teal" : "text-brand-blue"}`} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{title}</p>
+                    <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">{body}</p>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+          <WatchDemoButton
+            className={`btn-anim mt-5 inline-flex items-center gap-1.5 text-sm font-semibold hover:gap-2.5 ${
+              isInsights ? "text-brand-blue" : "text-brand-teal"
+            }`}
+          >
+            <PlayCircle className="size-4" />
+            See it in action
+          </WatchDemoButton>
+        </div>
+
+        {/* preview */}
+        <div className="flex flex-col justify-center">
+          {isInsights ? <InsightsPreview /> : <GlobalPreview />}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* Variant B — Bento grid                                              */
+/* ------------------------------------------------------------------ */
+
+function BentoGrid() {
+  return (
+    <div className="grid auto-rows-[minmax(0,1fr)] grid-cols-2 gap-4 md:grid-cols-4">
+      {/* Insights lead tile */}
+      <div className="col-span-2 flex flex-col justify-between rounded-2xl border border-brand-blue/40 bg-gradient-to-br from-brand-blue/[0.1] to-transparent p-6 md:row-span-2">
+        <div>
+          <span className="flex size-10 items-center justify-center rounded-xl bg-brand-blue/15">
+            <Search className="size-5 text-brand-blue" />
+          </span>
+          <h3 className="mt-4 text-lg font-semibold text-foreground">Ethel Insights</h3>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            An AI analyst for case data. Ask plain-language questions across an entire EcoReports
+            dataset and get instant, source-cited answers.
+          </p>
+        </div>
+        <WatchDemoButton className="btn-anim mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-blue hover:gap-2.5">
+          <PlayCircle className="size-4" />
+          See it in action
+        </WatchDemoButton>
+      </div>
+
+      {/* highlighted CTA tile */}
+      <div className="col-span-2 flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-gradient-from/20 via-gradient-via/15 to-gradient-to/20 p-6 md:row-span-2">
+        <div>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand-blue/30 bg-background/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-brand-blue">
+            <Sparkles className="size-3" />
+            Private beta
+          </span>
+          <p className="mt-4 text-pretty text-lg font-semibold leading-snug text-foreground">
+            Two new superpowers, layered on top of case summaries.
+          </p>
+        </div>
+        <JoinBetaButton
+          count={20}
+          className="btn-anim btn-anim-primary mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-5 py-3 text-sm font-semibold text-primary-foreground"
+        >
+          <Sparkles className="size-4" />
+          Join the beta
+        </JoinBetaButton>
+      </div>
+
+      {/* Insights feature tiles */}
+      {[insights[1], insights[2], insights[3]].map((item) => {
+        const Icon = item.icon
+        return (
+          <div
+            key={item.problem}
+            className="col-span-2 rounded-2xl border border-border bg-card/60 p-5 backdrop-blur md:col-span-2"
+          >
+            <span className="flex size-8 items-center justify-center rounded-lg bg-brand-teal/15">
+              <Icon className="size-4 text-brand-teal" />
+            </span>
+            <p className="mt-3 text-sm font-semibold text-foreground">{item.problem}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.solution}</p>
+          </div>
+        )
+      })}
+
+      {/* Global lead tile */}
+      <div className="col-span-2 flex flex-col justify-between rounded-2xl border border-brand-teal/40 bg-gradient-to-br from-brand-teal/[0.1] to-transparent p-6 md:row-span-2">
+        <div>
+          <span className="flex size-10 items-center justify-center rounded-xl bg-brand-teal/15">
+            <Globe className="size-5 text-brand-teal" />
+          </span>
+          <h3 className="mt-4 text-lg font-semibold text-foreground">Ethel Global</h3>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            Reasoning across every case. Query your whole org within permission scope — trends,
+            comparisons, and similar cases from anywhere.
+          </p>
+        </div>
+        <WatchDemoButton className="btn-anim mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-teal hover:gap-2.5">
+          <PlayCircle className="size-4" />
+          See it in action
+        </WatchDemoButton>
+      </div>
+
+      {/* Global feature tiles */}
+      {[globalPoints[0], globalPoints[1], globalPoints[2], globalPoints[4]].map((item) => {
+        const Icon = item.icon
+        return (
+          <div
+            key={item.title}
+            className="col-span-2 rounded-2xl border border-border bg-card/60 p-5 backdrop-blur"
+          >
+            <span className="flex size-8 items-center justify-center rounded-lg bg-brand-blue/15">
+              <Icon className="size-4 text-brand-blue" />
+            </span>
+            <p className="mt-3 text-sm font-semibold text-foreground">{item.title}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+
 export function BetaProgram() {
+  const [variant, setVariant] = useState<"tabbed" | "bento">("tabbed")
   const [open, setOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const { bursts, fire } = useStarBurst()
@@ -188,7 +438,6 @@ export function BetaProgram() {
 
   return (
     <section id="beta" className="scroll-mt-20 border-t border-border/60 bg-background">
-      {/* ambient wash */}
       <div className="relative overflow-hidden">
         <div
           aria-hidden="true"
@@ -197,7 +446,7 @@ export function BetaProgram() {
 
         <div className="relative mx-auto max-w-6xl px-5 py-20">
           {/* header */}
-          <div className="mx-auto mb-12 max-w-2xl text-center">
+          <div className="mx-auto mb-8 max-w-2xl text-center">
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-blue">
               <Sparkles className="size-3.5" />
               Private beta
@@ -209,110 +458,52 @@ export function BetaProgram() {
               Beta users get two new superpowers layered on top of case summaries — an AI analyst
               for your data, and reasoning that spans your entire organization.
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <JoinBetaButton
-                count={20}
-                className="btn-anim btn-anim-primary inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-7 py-3.5 text-base font-semibold text-primary-foreground"
-              >
-                <Sparkles className="size-4" />
-                Join the beta
-              </JoinBetaButton>
-              <WatchDemoButton className="btn-anim inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-7 py-3.5 text-base font-semibold text-foreground hover:bg-card">
-                <PlayCircle className="size-5 text-brand-teal" />
-                Watch the demo
-              </WatchDemoButton>
-            </div>
           </div>
 
-          {/* two products */}
-          <div className="grid items-start gap-6 md:grid-cols-2">
-            {/* Ethel Insights */}
-            <div className="rounded-2xl border border-border bg-card/60 p-7 backdrop-blur">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="flex size-10 items-center justify-center rounded-xl bg-brand-blue/15">
-                  <Search className="size-5 text-brand-blue" />
-                </span>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">Ethel Insights</h3>
-                  <p className="text-sm text-muted-foreground">An AI analyst for case data</p>
-                </div>
-              </div>
-              <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
-                From any EcoReports report, ask plain-language questions across the entire dataset
-                and get instant, source-cited answers.
-              </p>
-              <ul className="space-y-4">
-                {insights.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <li key={item.problem} className="flex gap-3">
-                      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-brand-teal/15">
-                        <Icon className="size-4 text-brand-teal" />
-                      </span>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">{item.problem}</p>
-                        <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
-                          {item.solution}
-                        </p>
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-              <p className="mt-6 rounded-lg border border-border/60 bg-secondary/40 px-3 py-2 text-xs text-muted-foreground">
-                Scope — isolated to EcoReports and its datasets.
-              </p>
-              <WatchDemoButton className="btn-anim mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-blue hover:gap-2.5">
-                <PlayCircle className="size-4" />
-                See it in action
-              </WatchDemoButton>
-            </div>
+          {/* layout toggle (temporary — for choosing a direction) */}
+          <div className="mx-auto mb-10 flex w-fit items-center gap-1 rounded-full border border-border bg-card/60 p-1 backdrop-blur">
+            {[
+              { key: "tabbed" as const, label: "Tabbed showcase", icon: PanelTop },
+              { key: "bento" as const, label: "Bento grid", icon: LayoutGrid },
+            ].map((v) => {
+              const Icon = v.icon
+              const on = variant === v.key
+              return (
+                <button
+                  key={v.key}
+                  type="button"
+                  onClick={() => setVariant(v.key)}
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                    on
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <Icon className="size-4" />
+                  {v.label}
+                </button>
+              )
+            })}
+          </div>
 
-            {/* Ethel Global */}
-            <div className="relative overflow-hidden rounded-2xl border border-brand-blue/40 bg-gradient-to-b from-brand-blue/[0.08] to-transparent p-7 backdrop-blur">
-              <span className="absolute right-5 top-5 rounded-full border border-brand-teal/30 bg-brand-teal/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand-teal">
-                Additive
-              </span>
-              <div className="mb-6 flex items-center gap-3">
-                <span className="flex size-10 items-center justify-center rounded-xl bg-brand-teal/15">
-                  <Globe className="size-5 text-brand-teal" />
-                </span>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">Ethel Global</h3>
-                  <p className="text-sm text-muted-foreground">Reasoning across every case</p>
-                </div>
-              </div>
-              <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
-                From the case list, a dashboard, or anywhere — Ethel reasons across cases org-wide,
-                within your permission scope. Layers on top of both summaries and insights.
-              </p>
-              <ul className="space-y-4">
-                {globalPoints.map((item) => {
-                  const Icon = item.icon
-                  return (
-                    <li key={item.title} className="flex gap-3">
-                      <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-brand-blue/15">
-                        <Icon className="size-4 text-brand-blue" />
-                      </span>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                        <p className="mt-0.5 text-sm leading-relaxed text-muted-foreground">
-                          {item.body}
-                        </p>
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-              <p className="mt-6 rounded-lg border border-border/60 bg-secondary/40 px-3 py-2 text-xs text-muted-foreground">
-                Beta framing — generation focuses on getting the content right; apply your own
-                styling and branding on export.
-              </p>
-              <WatchDemoButton className="btn-anim mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-teal hover:gap-2.5">
-                <PlayCircle className="size-4" />
-                See it in action
-              </WatchDemoButton>
-            </div>
+          {/* selected layout */}
+          <div key={variant} className="animate-fade-up">
+            {variant === "tabbed" ? <TabbedShowcase /> : <BentoGrid />}
+          </div>
+
+          {/* shared CTA under the layout */}
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <JoinBetaButton
+              count={20}
+              className="btn-anim btn-anim-primary inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-7 py-3.5 text-base font-semibold text-primary-foreground"
+            >
+              <Sparkles className="size-4" />
+              Join the beta
+            </JoinBetaButton>
+            <WatchDemoButton className="btn-anim inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-7 py-3.5 text-base font-semibold text-foreground hover:bg-card">
+              <PlayCircle className="size-5 text-brand-teal" />
+              Watch the demo
+            </WatchDemoButton>
           </div>
         </div>
       </div>
