@@ -297,7 +297,7 @@ function LeadTile({
   name,
   desc,
   chips,
-  graphic,
+  features,
   className,
 }: {
   tone: "blue" | "teal"
@@ -305,7 +305,7 @@ function LeadTile({
   name: string
   desc: string
   chips: string[]
-  graphic: React.ReactNode
+  features: string[]
   className?: string
 }) {
   const accent = tone === "blue" ? "text-brand-blue" : "text-brand-teal"
@@ -317,24 +317,27 @@ function LeadTile({
     <div
       className={`flex flex-col overflow-hidden rounded-2xl border ${border} bg-gradient-to-br ${wash} p-5 ${className ?? ""}`}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="flex items-center gap-2">
-            <span
-              className={`flex size-8 items-center justify-center rounded-lg ${
-                tone === "blue" ? "bg-brand-blue/15" : "bg-brand-teal/15"
-              }`}
-            >
-              <Icon className={`size-4 ${accent}`} />
-            </span>
-            <h3 className="text-base font-semibold text-foreground">{name}</h3>
-          </div>
-          <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">{desc}</p>
-        </div>
+      <div className="flex items-center gap-2">
+        <span
+          className={`flex size-8 items-center justify-center rounded-lg ${
+            tone === "blue" ? "bg-brand-blue/15" : "bg-brand-teal/15"
+          }`}
+        >
+          <Icon className={`size-4 ${accent}`} />
+        </span>
+        <h3 className="text-base font-semibold text-foreground">{name}</h3>
       </div>
+      <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">{desc}</p>
 
-      {/* software graphic fills the tile */}
-      <div className="my-3 min-h-0 flex-1">{graphic}</div>
+      {/* feature checklist fills the tile */}
+      <ul className="my-3 min-h-0 flex-1 space-y-2 pt-1">
+        {features.map((f) => (
+          <li key={f} className="flex items-start gap-2 text-[12.5px] leading-snug text-foreground">
+            <Check className={`mt-0.5 size-3.5 shrink-0 ${accent}`} />
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
         {chips.map((c) => (
@@ -349,6 +352,44 @@ function LeadTile({
           See it
         </WatchDemoButton>
       </div>
+    </div>
+  )
+}
+
+/** A floating window-chrome console that holds a software graphic. */
+function FloatingConsole({
+  tone,
+  label,
+  tilt,
+  graphic,
+  className,
+}: {
+  tone: "blue" | "teal"
+  label: string
+  tilt: string
+  graphic: React.ReactNode
+  className?: string
+}) {
+  const dot = tone === "blue" ? "bg-brand-blue" : "bg-brand-teal"
+  return (
+    <div
+      className={`animate-float overflow-hidden rounded-xl border border-border bg-card/95 shadow-2xl ring-1 ring-black/5 backdrop-blur ${tilt} ${className ?? ""}`}
+    >
+      {/* title bar */}
+      <div className="flex items-center gap-2 border-b border-border/70 bg-secondary/50 px-3 py-1.5">
+        <span className="flex items-center gap-1">
+          <span className="size-2 rounded-full bg-destructive/60" />
+          <span className="size-2 rounded-full bg-brand-pink/60" />
+          <span className="size-2 rounded-full bg-brand-teal/60" />
+        </span>
+        <span className="ml-1 font-mono text-[10px] text-muted-foreground">{label}</span>
+        <span className="ml-auto flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
+          <span className={`size-1.5 rounded-full ${dot} animate-pulse-ring`} />
+          live
+        </span>
+      </div>
+      {/* graphic body */}
+      <div className="p-2 [&_svg]:!h-auto [&_svg]:!w-full">{graphic}</div>
     </div>
   )
 }
@@ -387,26 +428,34 @@ function MiniTile({
 function BentoGrid() {
   return (
     <div className="grid gap-3 md:h-[404px] md:grid-cols-4 md:grid-rows-2">
-      {/* Insights lead — 2x tall software console */}
+      {/* Insights lead — feature checklist */}
       <LeadTile
         className="md:col-span-2 md:row-span-2"
         tone="blue"
         icon={Search}
         name="Ethel Insights"
-        desc="An AI analyst for case data — ask plain-language questions across an entire EcoReports dataset and get instant, source-cited answers."
+        desc="An AI analyst for case data — ask plain-language questions across an entire EcoReports dataset."
         chips={["Plain-language", "Source-cited"]}
-        graphic={<ConsoleGraphic />}
+        features={[
+          "Query the underlying dataset directly — no report-building required",
+          "Every answer cites its case IDs and source documents",
+          "Works in any submission language",
+        ]}
       />
 
-      {/* Global lead — 2x tall network graphic */}
+      {/* Global lead — feature checklist */}
       <LeadTile
         className="md:col-span-2 md:row-span-2"
         tone="teal"
         icon={Globe}
         name="Ethel Global"
-        desc="Reasoning across every case. Query your whole org within permission scope — trends, comparisons, and similar cases from anywhere."
+        desc="Reasoning across every case — query your whole org within permission scope."
         chips={["Org-wide", "Cross-case"]}
-        graphic={<NetworkGraphic />}
+        features={[
+          "Surface similar cases and connections from anywhere",
+          "Trends and comparisons across the whole organization",
+          "Generate multi-case briefs in seconds",
+        ]}
       />
 
       {/* CTA tile */}
@@ -512,8 +561,45 @@ export function BetaProgram() {
             </h2>
           </div>
 
-          {/* bento */}
-          <BentoGrid />
+          {/* mobile: consoles stacked above the grid */}
+          <div className="mb-4 grid gap-3 sm:grid-cols-2 md:hidden">
+            <FloatingConsole
+              tone="blue"
+              label="ethel · insights"
+              tilt=""
+              graphic={<ConsoleGraphic />}
+            />
+            <FloatingConsole
+              tone="teal"
+              label="ethel · global"
+              tilt=""
+              graphic={<NetworkGraphic />}
+            />
+          </div>
+
+          {/* desktop: consoles float above, overlapping the grid's top edge */}
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-20 hidden items-start justify-between px-4 md:flex lg:px-10">
+              <FloatingConsole
+                tone="blue"
+                label="ethel · insights"
+                tilt="-rotate-2 hover:rotate-0"
+                graphic={<ConsoleGraphic />}
+                className="pointer-events-auto w-[300px] transition-transform duration-500"
+              />
+              <FloatingConsole
+                tone="teal"
+                label="ethel · global"
+                tilt="rotate-2 hover:rotate-0"
+                graphic={<NetworkGraphic />}
+                className="pointer-events-auto w-[300px] transition-transform duration-500"
+              />
+            </div>
+
+            <div className="md:pt-[168px]">
+              <BentoGrid />
+            </div>
+          </div>
         </div>
       </div>
 
