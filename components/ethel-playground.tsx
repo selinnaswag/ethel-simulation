@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 import {
   Play,
   Layers,
@@ -42,20 +42,13 @@ type TabKey = (typeof tabs)[number]["key"]
 
 /** Floating "we're doing more" nudge that points to the beta section. */
 function MoreComingPopup() {
-  const [show, setShow] = useState(false)
   const [dismissed, setDismissed] = useState(false)
-
-  useEffect(() => {
-    if (dismissed) return
-    const t = setTimeout(() => setShow(true), 3500)
-    return () => clearTimeout(t)
-  }, [dismissed])
 
   const goToBeta = () => {
     document.getElementById("beta")?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
-  if (!show || dismissed) return null
+  if (dismissed) return null
 
   return (
     <div className="animate-beta-pop absolute bottom-4 left-4 z-30 w-[240px] rounded-xl border border-brand-teal bg-card p-3.5 shadow-2xl shadow-brand-teal/40 ring-1 ring-brand-teal/40">
