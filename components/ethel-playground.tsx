@@ -58,7 +58,7 @@ function MoreComingPopup() {
   if (!show || dismissed) return null
 
   return (
-    <div className="animate-beta-pop absolute bottom-4 left-4 z-30 w-[240px] rounded-xl border border-brand-blue/30 bg-card p-3.5 shadow-2xl shadow-black/30">
+    <div className="animate-beta-pop absolute bottom-4 left-4 z-30 w-[240px] rounded-xl border-2 border-brand-teal bg-card p-3.5 shadow-2xl shadow-brand-teal/40 ring-2 ring-brand-teal/40">
       <button
         type="button"
         onClick={() => setDismissed(true)}
