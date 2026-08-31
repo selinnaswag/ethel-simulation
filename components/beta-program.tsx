@@ -292,104 +292,87 @@ function ExportGraphic() {
 /* ------------------------------------------------------------------ */
 
 function LeadTile({
-  tone,
+  variant,
   icon: Icon,
   name,
-  desc,
-  chips,
+  tagline,
   features,
   className,
 }: {
-  tone: "blue" | "teal"
+  variant: "glass" | "filled"
   icon: typeof Search
   name: string
-  desc: string
-  chips: string[]
+  tagline: string
   features: string[]
   className?: string
 }) {
-  const accent = tone === "blue" ? "text-brand-blue" : "text-brand-teal"
-  const chipAccent = tone === "blue" ? "text-brand-teal" : "text-brand-blue"
-  const border = tone === "blue" ? "border-brand-blue/40" : "border-brand-teal/40"
-  const wash =
-    tone === "blue" ? "from-brand-blue/[0.1] to-transparent" : "from-brand-teal/[0.1] to-transparent"
+  const filled = variant === "filled"
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-2xl border ${border} bg-gradient-to-br ${wash} p-5 ${className ?? ""}`}
+      className={`relative flex flex-col justify-end overflow-hidden rounded-2xl border p-5 ${
+        filled
+          ? "border-transparent bg-[linear-gradient(145deg,color-mix(in_oklch,var(--brand-teal)_88%,black_6%),color-mix(in_oklch,var(--brand-blue)_82%,black_8%))] text-primary-foreground shadow-lg"
+          : "border-border bg-card/70 backdrop-blur"
+      } ${className ?? ""}`}
     >
-      <div className="flex items-center gap-2">
-        <span
-          className={`flex size-8 items-center justify-center rounded-lg ${
-            tone === "blue" ? "bg-brand-blue/15" : "bg-brand-teal/15"
+      {filled && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.10] [background-image:linear-gradient(var(--primary-foreground)_1px,transparent_1px),linear-gradient(90deg,var(--primary-foreground)_1px,transparent_1px)] [background-size:18px_18px]"
+        />
+      )}
+      <div className="relative">
+        <div className="flex items-center gap-2">
+          <span
+            className={`flex size-8 items-center justify-center rounded-lg ${
+              filled ? "bg-primary-foreground/20" : "bg-brand-blue/15"
+            }`}
+          >
+            <Icon
+              className={`size-4 ${filled ? "text-primary-foreground" : "text-brand-blue"}`}
+            />
+          </span>
+          <h3 className="text-base font-semibold">{name}</h3>
+        </div>
+        <p
+          className={`mt-1.5 text-[13px] leading-relaxed ${
+            filled ? "text-primary-foreground/80" : "text-muted-foreground"
           }`}
         >
-          <Icon className={`size-4 ${accent}`} />
-        </span>
-        <h3 className="text-base font-semibold text-foreground">{name}</h3>
-      </div>
-      <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">{desc}</p>
-
-      {/* feature checklist fills the tile */}
-      <ul className="my-3 min-h-0 flex-1 space-y-2 pt-1">
-        {features.map((f) => (
-          <li key={f} className="flex items-start gap-2 text-[12.5px] leading-snug text-foreground">
-            <Check className={`mt-0.5 size-3.5 shrink-0 ${accent}`} />
-            <span>{f}</span>
-          </li>
-        ))}
-      </ul>
-
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-        {chips.map((c) => (
-          <span key={c} className={`text-[11px] font-medium ${chipAccent}`}>
-            {c}
-          </span>
-        ))}
-        <WatchDemoButton
-          className={`btn-anim ml-auto inline-flex items-center gap-1 text-[13px] font-semibold hover:gap-2 ${accent}`}
-        >
-          <PlayCircle className="size-3.5" />
-          See it
-        </WatchDemoButton>
+          {tagline}
+        </p>
+        <ul className="mt-3 space-y-1.5">
+          {features.map((f) => (
+            <li key={f} className="flex items-start gap-2 text-[12px] leading-snug">
+              <Check
+                className={`mt-0.5 size-3.5 shrink-0 ${
+                  filled ? "text-primary-foreground" : "text-brand-teal"
+                }`}
+              />
+              <span className={filled ? "text-primary-foreground/90" : "text-foreground/90"}>
+                {f}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )
 }
 
-/** A floating window-chrome console that holds a software graphic. */
+/** A floating panel that holds a software graphic (the SVG carries its own chrome). */
 function FloatingConsole({
-  tone,
-  label,
-  tilt,
   graphic,
   className,
 }: {
-  tone: "blue" | "teal"
-  label: string
-  tilt: string
   graphic: React.ReactNode
   className?: string
 }) {
-  const dot = tone === "blue" ? "bg-brand-blue" : "bg-brand-teal"
   return (
     <div
-      className={`animate-float overflow-hidden rounded-xl border border-border bg-card/95 shadow-2xl ring-1 ring-black/5 backdrop-blur ${tilt} ${className ?? ""}`}
+      className={`animate-float overflow-hidden rounded-xl shadow-2xl ring-1 ring-black/10 [&_svg]:!h-auto [&_svg]:!w-full ${className ?? ""}`}
     >
-      {/* title bar */}
-      <div className="flex items-center gap-2 border-b border-border/70 bg-secondary/50 px-3 py-1.5">
-        <span className="flex items-center gap-1">
-          <span className="size-2 rounded-full bg-destructive/60" />
-          <span className="size-2 rounded-full bg-brand-pink/60" />
-          <span className="size-2 rounded-full bg-brand-teal/60" />
-        </span>
-        <span className="ml-1 font-mono text-[10px] text-muted-foreground">{label}</span>
-        <span className="ml-auto flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
-          <span className={`size-1.5 rounded-full ${dot} animate-pulse-ring`} />
-          live
-        </span>
-      </div>
-      {/* graphic body */}
-      <div className="p-2 [&_svg]:!h-auto [&_svg]:!w-full">{graphic}</div>
+      {graphic}
     </div>
   )
 }
@@ -427,34 +410,32 @@ function MiniTile({
 
 function BentoGrid() {
   return (
-    <div className="grid gap-3 md:h-[404px] md:grid-cols-4 md:grid-rows-2">
-      {/* Insights lead — feature checklist */}
+    <div className="grid gap-3 md:grid-cols-6 md:grid-rows-[auto_138px]">
+      {/* Insights lead — glass, console floats over its left */}
       <LeadTile
-        className="md:col-span-2 md:row-span-2"
-        tone="blue"
+        className="md:col-span-3 md:pt-[108px]"
+        variant="glass"
         icon={Search}
         name="Ethel Insights"
-        desc="An AI analyst for case data — ask plain-language questions across an entire EcoReports dataset."
-        chips={["Plain-language", "Source-cited"]}
+        tagline="Ask your whole dataset in plain language."
         features={[
-          "Query the underlying dataset directly — no report-building required",
-          "Every answer cites its case IDs and source documents",
+          "Query data directly — no report-building",
+          "Answers cite case IDs & source docs",
           "Works in any submission language",
         ]}
       />
 
-      {/* Global lead — feature checklist */}
+      {/* Global lead — filled, stands out; console floats over its right */}
       <LeadTile
-        className="md:col-span-2 md:row-span-2"
-        tone="teal"
+        className="md:col-span-3 md:pt-[108px]"
+        variant="filled"
         icon={Globe}
         name="Ethel Global"
-        desc="Reasoning across every case — query your whole org within permission scope."
-        chips={["Org-wide", "Cross-case"]}
+        tagline="Reasoning across every case in your org."
         features={[
-          "Surface similar cases and connections from anywhere",
-          "Trends and comparisons across the whole organization",
-          "Generate multi-case briefs in seconds",
+          "Similar cases surfaced from anywhere",
+          "Org-wide trends & comparisons",
+          "Multi-case briefs in seconds",
         ]}
       />
 
@@ -549,9 +530,9 @@ export function BetaProgram() {
           className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(ellipse_50%_60%_at_15%_0%,color-mix(in_oklch,var(--brand-blue)_16%,transparent),transparent_70%),radial-gradient(ellipse_50%_60%_at_85%_100%,color-mix(in_oklch,var(--brand-teal)_16%,transparent),transparent_70%)]"
         />
 
-        <div className="relative mx-auto max-w-6xl px-5 py-9">
+        <div className="relative mx-auto max-w-6xl px-5 py-8">
           {/* header */}
-          <div className="mx-auto mb-5 max-w-2xl text-center">
+          <div className="mx-auto mb-4 max-w-2xl text-center">
             <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-blue">
               <Sparkles className="size-3.5" />
               Private beta
@@ -563,42 +544,24 @@ export function BetaProgram() {
 
           {/* mobile: consoles stacked above the grid */}
           <div className="mb-4 grid gap-3 sm:grid-cols-2 md:hidden">
-            <FloatingConsole
-              tone="blue"
-              label="ethel · insights"
-              tilt=""
-              graphic={<ConsoleGraphic />}
-            />
-            <FloatingConsole
-              tone="teal"
-              label="ethel · global"
-              tilt=""
-              graphic={<NetworkGraphic />}
-            />
+            <FloatingConsole graphic={<ConsoleGraphic />} />
+            <FloatingConsole graphic={<NetworkGraphic />} />
           </div>
 
-          {/* desktop: consoles float above, overlapping the grid's top edge */}
+          {/* desktop: Insights console floats over the left tile, Global over the right */}
           <div className="relative">
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-20 hidden items-start justify-between px-4 md:flex lg:px-10">
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-20 hidden md:block">
               <FloatingConsole
-                tone="blue"
-                label="ethel · insights"
-                tilt="-rotate-2 hover:rotate-0"
                 graphic={<ConsoleGraphic />}
-                className="pointer-events-auto w-[300px] transition-transform duration-500"
+                className="pointer-events-auto absolute -top-5 left-3 w-[244px] -rotate-2 transition-transform duration-500 hover:rotate-0 lg:left-6"
               />
               <FloatingConsole
-                tone="teal"
-                label="ethel · global"
-                tilt="rotate-2 hover:rotate-0"
                 graphic={<NetworkGraphic />}
-                className="pointer-events-auto w-[300px] transition-transform duration-500"
+                className="pointer-events-auto absolute -top-5 right-3 w-[244px] rotate-2 transition-transform duration-500 hover:rotate-0 lg:right-6"
               />
             </div>
 
-            <div className="md:pt-[168px]">
-              <BentoGrid />
-            </div>
+            <BentoGrid />
           </div>
         </div>
       </div>
