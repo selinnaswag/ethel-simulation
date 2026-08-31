@@ -1,7 +1,15 @@
 "use client"
 
-import { useLayoutEffect, useRef, useState } from "react"
-import { Play, Layers, MessageCircleQuestion, TerminalSquare } from "lucide-react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import {
+  Play,
+  Layers,
+  MessageCircleQuestion,
+  TerminalSquare,
+  Sparkles,
+  ArrowDown,
+  X,
+} from "lucide-react"
 import { ThirtySecondDemo } from "@/components/thirty-second-demo"
 import { SummaryTypes } from "@/components/summary-types"
 import { AskEthel } from "@/components/ask-ethel"
@@ -31,6 +39,54 @@ const tabs = [
 ] as const
 
 type TabKey = (typeof tabs)[number]["key"]
+
+/** Floating "we're doing more" nudge that points to the beta section. */
+function MoreComingPopup() {
+  const [show, setShow] = useState(false)
+  const [dismissed, setDismissed] = useState(false)
+
+  useEffect(() => {
+    if (dismissed) return
+    const t = setTimeout(() => setShow(true), 3500)
+    return () => clearTimeout(t)
+  }, [dismissed])
+
+  const goToBeta = () => {
+    document.getElementById("beta")?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
+  if (!show || dismissed) return null
+
+  return (
+    <div className="animate-beta-pop absolute bottom-4 left-4 z-30 w-[240px] rounded-xl border border-brand-blue/30 bg-card p-3.5 shadow-2xl shadow-black/30">
+      <button
+        type="button"
+        onClick={() => setDismissed(true)}
+        aria-label="Dismiss"
+        className="btn-anim absolute right-2 top-2 flex size-5 items-center justify-center rounded-full text-muted-foreground hover:bg-secondary hover:text-foreground"
+      >
+        <X className="size-3" />
+      </button>
+      <div className="flex items-center gap-1.5">
+        <span className="flex size-6 items-center justify-center rounded-lg bg-brand-blue/15">
+          <Sparkles className="size-3.5 text-brand-blue" />
+        </span>
+        <p className="text-sm font-bold text-foreground">We&apos;re doing more!</p>
+      </div>
+      <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+        This is just the start — new AI superpowers are in private beta right now.
+      </p>
+      <button
+        type="button"
+        onClick={goToBeta}
+        className="btn-anim btn-anim-primary mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-3 py-2 text-xs font-semibold text-primary-foreground"
+      >
+        See what&apos;s in beta
+        <ArrowDown className="size-3.5" />
+      </button>
+    </div>
+  )
+}
 
 export function EthelPlayground() {
   const [active, setActive] = useState<TabKey>("demo")
@@ -65,7 +121,8 @@ export function EthelPlayground() {
         </div>
 
         {/* sandbox window */}
-        <div className="mx-auto max-w-5xl overflow-hidden rounded-2xl border border-border bg-card/40 shadow-xl shadow-black/20 backdrop-blur">
+        <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-border bg-card/40 shadow-xl shadow-black/20 backdrop-blur">
+          <MoreComingPopup />
           {/* sandbox title bar */}
           <div className="flex items-center gap-3 border-b border-border/70 bg-secondary/40 px-4 py-2.5">
             <div className="flex items-center gap-1.5">

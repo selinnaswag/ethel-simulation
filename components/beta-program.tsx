@@ -2,17 +2,7 @@
 
 import type React from "react"
 import { useCallback, useEffect, useRef, useState } from "react"
-import {
-  Sparkles,
-  Search,
-  Radar,
-  Globe,
-  FileDown,
-  ArrowRight,
-  X,
-  Check,
-  PlayCircle,
-} from "lucide-react"
+import { Sparkles, Search, Globe, ArrowRight, X, Check, PlayCircle } from "lucide-react"
 import { BetaDemoModal, WatchDemoButton } from "@/components/beta-demo"
 import { UseCasesModal, ViewUseCasesButton } from "@/components/beta-use-cases"
 
@@ -325,69 +315,6 @@ function NetworkGraphic() {
   )
 }
 
-/** Pattern radar — a bar series with one auto-flagged spike. */
-function SpikeGraphic() {
-  const bars = [10, 14, 12, 16, 13, 30, 15]
-  return (
-    <svg viewBox="0 0 132 76" className="h-full w-full" role="img" aria-label="Category spike flagged automatically">
-      {bars.map((h, i) => {
-        const spike = h === 30
-        return (
-          <rect
-            key={i}
-            x={8 + i * 17}
-            y={66 - h}
-            width="11"
-            height={h}
-            rx="2"
-            fill={spike ? "var(--brand-pink)" : "var(--brand-blue)"}
-            opacity={spike ? 1 : 0.35}
-          />
-        )
-      })}
-      <line x1="6" y1="66" x2="126" y2="66" stroke="var(--border)" />
-      {/* flag on the spike */}
-      <circle cx="107.5" cy="30" r="6" fill="var(--brand-pink)" opacity="0.2" />
-      <path d="M105 27 v8 M105 27 h5 l-1.5 2 1.5 2 h-5" stroke="var(--brand-pink)" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-/** Document export — stacked pages exporting to file formats. */
-function ExportGraphic() {
-  return (
-    <svg viewBox="0 0 132 76" className="h-full w-full" role="img" aria-label="Generated document exporting to Word, Excel and PDF">
-      {/* back page */}
-      <rect x="20" y="10" width="42" height="54" rx="4" fill="var(--secondary)" stroke="var(--border)" />
-      {/* front page */}
-      <rect x="12" y="16" width="42" height="54" rx="4" fill="var(--background)" stroke="var(--border)" />
-      {[26, 32, 38, 44, 50].map((y) => (
-        <line key={y} x1="19" y1={y} x2="47" y2={y} stroke="var(--muted-foreground)" strokeWidth="1.4" opacity="0.4" />
-      ))}
-      <line x1="19" y1="56" x2="38" y2="56" stroke="var(--brand-teal)" strokeWidth="1.6" />
-      {/* format chips */}
-      {[
-        { t: "DOCX", c: "var(--brand-blue)", y: 16 },
-        { t: "XLSX", c: "var(--brand-teal)", y: 34 },
-        { t: "PDF", c: "var(--brand-pink)", y: 52 },
-      ].map((f) => (
-        <g key={f.t}>
-          <rect x="80" y={f.y} width="42" height="15" rx="4" fill={f.c} opacity="0.14" />
-          <text x="101" y={f.y + 10.5} fontSize="8" fontFamily="monospace" fill={f.c} textAnchor="middle">
-            {f.t}
-          </text>
-        </g>
-      ))}
-      {/* arrow */}
-      <path d="M60 43 h14 M70 39 l5 4 -5 4" stroke="var(--muted-foreground)" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/* Bento grid — everything on one screen, no empty cells               */
-/* ------------------------------------------------------------------ */
-
 /** Deep-space backdrop: gradient void, twinkling stars, drifting nebulae, undulating waves. */
 function SpaceBackdrop() {
   // deterministic star field (avoids hydration mismatch)
@@ -568,38 +495,6 @@ function ProductCard({
   )
 }
 
-/** A compact secondary-feature card with a small software graphic. */
-function MiniTile({
-  icon: Icon,
-  tone,
-  title,
-  body,
-  graphic,
-}: {
-  icon: typeof Search
-  tone: "blue" | "pink"
-  title: string
-  body: string
-  graphic: React.ReactNode
-}) {
-  const accent = tone === "blue" ? "text-brand-blue" : "text-brand-pink"
-  const bg = tone === "blue" ? "bg-brand-blue/15" : "bg-brand-pink/15"
-  return (
-    <div className="flex items-center gap-4 rounded-2xl border border-border bg-card/60 p-4 backdrop-blur">
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
-          <span className={`flex size-7 items-center justify-center rounded-lg ${bg}`}>
-            <Icon className={`size-3.5 ${accent}`} />
-          </span>
-          <p className="text-sm font-semibold text-foreground">{title}</p>
-        </div>
-        <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{body}</p>
-      </div>
-      <div className="w-24 shrink-0 [&_svg]:block [&_svg]:h-auto [&_svg]:w-full">{graphic}</div>
-    </div>
-  )
-}
-
 function BetaShowcase() {
   return (
     <div className="space-y-4">
@@ -639,21 +534,23 @@ function BetaShowcase() {
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <MiniTile
-          icon={Radar}
-          tone="pink"
-          title="Pattern radar"
-          body="Category spikes, location anomalies, and cross-case connections flagged automatically."
-          graphic={<SpikeGraphic />}
-        />
-        <MiniTile
-          icon={FileDown}
-          tone="blue"
-          title="Document export"
-          body="Word, Excel, PDF & PowerPoint — with custom columns and preview before download."
-          graphic={<ExportGraphic />}
-        />
+      {/* full-width join CTA */}
+      <div className="flex flex-col items-center gap-5 rounded-2xl border border-brand-blue/25 bg-gradient-to-r from-brand-blue/10 via-brand-teal/10 to-brand-blue/10 px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left">
+        <div>
+          <h3 className="text-lg font-bold tracking-tight text-foreground sm:text-xl">
+            Be first to try what&apos;s next
+          </h3>
+          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+            Join the private beta and help shape Ethel Insights and Ethel Global.
+          </p>
+        </div>
+        <JoinBetaButton
+          count={22}
+          className="btn-anim btn-anim-primary inline-flex shrink-0 items-center gap-2 rounded-full bg-gradient-to-r from-gradient-from via-gradient-via to-gradient-to px-8 py-3.5 text-base font-semibold text-primary-foreground"
+        >
+          <Sparkles className="size-4" />
+          Join the beta
+        </JoinBetaButton>
       </div>
     </div>
   )

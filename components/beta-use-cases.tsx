@@ -5,15 +5,14 @@ import { useCallback, useEffect, useState } from "react"
 import {
   Globe,
   X,
-  Users,
-  MapPin,
-  TrendingUp,
-  ShieldAlert,
-  Scale,
-  Building2,
-  Languages,
-  FileStack,
   Search,
+  TrendingUp,
+  GitCompare,
+  FileDown,
+  Columns3,
+  Eye,
+  Wand2,
+  Info,
 } from "lucide-react"
 
 const OPEN_EVENT = "ethel:open-usecases"
@@ -37,60 +36,55 @@ export function ViewUseCasesButton({
 }
 
 type UseCase = {
-  icon: typeof Users
+  icon: typeof Globe
   title: string
-  prompt: string
   desc: string
+  prompt?: string
+  chips?: string[]
+  note?: boolean
 }
 
 const useCases: UseCase[] = [
   {
-    icon: Users,
-    title: "Repeat subjects",
-    prompt: "Where else has this person or vendor appeared?",
-    desc: "Link a named individual or third party across every case in the org, even under different spellings or languages.",
-  },
-  {
-    icon: MapPin,
-    title: "Location clusters",
-    prompt: "Which sites have the most conduct reports this quarter?",
-    desc: "Roll cases up by office, region, or business unit to see where risk concentrates.",
-  },
-  {
     icon: TrendingUp,
-    title: "Emerging trends",
-    prompt: "What categories are rising fastest vs. last quarter?",
-    desc: "Surface category spikes and shifts before they show up in a scheduled report.",
+    title: "Org-wide querying",
+    prompt:
+      "Are we seeing more harassment complaints out of the Los Angeles location this quarter compared to last?",
+    desc: "Ask across your whole organization and get a narrative summary synthesized from every matching case.",
   },
   {
-    icon: ShieldAlert,
-    title: "Retaliation & repeat risk",
-    prompt: "Any follow-on reports tied to this reporter or subject?",
-    desc: "Catch connected filings that signal retaliation or an escalating situation.",
+    icon: GitCompare,
+    title: "Cross-case similarity search",
+    prompt: "Are there any similar cases to this one?",
+    desc: "Right inside the case panel, Ethel finds related cases system-wide — matching subjects and overlapping findings.",
   },
   {
-    icon: Scale,
-    title: "Consistency checks",
-    prompt: "How were similar cases resolved and how long did they take?",
-    desc: "Compare outcomes and cycle times across similar matters to keep decisions defensible.",
+    icon: FileDown,
+    title: "Document export",
+    chips: ["Word", "Excel", "PDF", "PowerPoint"],
+    desc: "Export any generation to the format you need, ready to share.",
   },
   {
-    icon: Building2,
-    title: "Executive & board briefs",
-    prompt: "Summarize all open bribery cases across EMEA.",
-    desc: "Generate a multi-case brief scoped to a region, category, or time window in seconds.",
+    icon: Columns3,
+    title: "Custom Excel columns",
+    desc: "Excel export lets you pick the exact fields — Case Manager, Case Number, Category, Case Status — instead of a fixed template.",
   },
   {
-    icon: FileStack,
-    title: "Document synthesis",
-    prompt: "What do the attachments and witness statements agree on?",
-    desc: "Reconcile intake forms, statements, and attachments across related cases into one view.",
+    icon: Eye,
+    title: "Preview before download",
+    desc: "Generated documents show an expected-output preview in the panel before you commit to downloading.",
   },
   {
-    icon: Languages,
-    title: "Cross-language reach",
-    prompt: "Find related reports in any submission language.",
-    desc: "Query once and match cases filed in any language, with source-cited answers.",
+    icon: Wand2,
+    title: "In-flow revision",
+    prompt: "Add an executive summary at the beginning.",
+    desc: "Request changes in plain language and Ethel updates the same document rather than starting over.",
+  },
+  {
+    icon: Info,
+    title: "About styling in beta",
+    note: true,
+    desc: "During beta, generation focuses on getting the content right. Export your document and apply your own styling and branding afterward.",
   },
 ]
 
@@ -153,10 +147,26 @@ export function UseCasesModal() {
         <div className="grid gap-3 overflow-y-auto p-5 sm:grid-cols-2">
           {useCases.map((u) => {
             const Icon = u.icon
+            if (u.note) {
+              return (
+                <div
+                  key={u.title}
+                  className="flex items-start gap-3 rounded-xl border border-brand-pink/30 bg-brand-pink/[0.06] p-4 sm:col-span-2"
+                >
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-brand-pink/15">
+                    <Icon className="size-3.5 text-brand-pink" />
+                  </span>
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground">{u.title}</h4>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{u.desc}</p>
+                  </div>
+                </div>
+              )
+            }
             return (
               <div
                 key={u.title}
-                className="rounded-xl border border-border bg-background/50 p-4 transition-colors hover:border-brand-teal/40"
+                className="flex flex-col rounded-xl border border-border bg-background/50 p-4 transition-colors hover:border-brand-teal/40"
               >
                 <div className="flex items-center gap-2">
                   <span className="flex size-7 items-center justify-center rounded-lg bg-brand-teal/12">
@@ -164,14 +174,31 @@ export function UseCasesModal() {
                   </span>
                   <h4 className="text-sm font-semibold text-foreground">{u.title}</h4>
                 </div>
-                <div className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-border/60 bg-secondary/40 px-2.5 py-1.5">
-                  <Search className="mt-0.5 size-3 shrink-0 text-brand-blue" />
-                  <p className="text-[11.5px] font-medium leading-snug text-foreground">
-                    {'"'}
-                    {u.prompt}
-                    {'"'}
-                  </p>
-                </div>
+
+                {u.prompt && (
+                  <div className="mt-2.5 flex items-start gap-1.5 rounded-lg border border-border/60 bg-secondary/40 px-2.5 py-1.5">
+                    <Search className="mt-0.5 size-3 shrink-0 text-brand-blue" />
+                    <p className="text-[11.5px] font-medium leading-snug text-foreground">
+                      {'"'}
+                      {u.prompt}
+                      {'"'}
+                    </p>
+                  </div>
+                )}
+
+                {u.chips && (
+                  <div className="mt-2.5 flex flex-wrap gap-1.5">
+                    {u.chips.map((c) => (
+                      <span
+                        key={c}
+                        className="rounded-md border border-border/60 bg-secondary/40 px-2 py-0.5 text-[10.5px] font-semibold text-foreground"
+                      >
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
                 <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{u.desc}</p>
               </div>
             )
